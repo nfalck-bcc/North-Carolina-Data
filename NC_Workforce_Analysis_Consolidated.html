@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>North Carolina Workforce Analysis — Consolidated Deliverable</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--surface:#faf8f4;--border:#ddd8cf;
+  --text:#1a1714;--muted:#6b6560;--light:#9b948c;
+  --hc:#1b4d6e;--hc-l:#c8dfe9;--hc-m:#4a90b8;
+  --mfg:#5a3020;--mfg-l:#e8c8b8;--mfg-m:#b86040;
+  --pos:#2e7d5a;--pos-l:#c8e6d8;
+  --neg:#9b3a3a;--neg-l:#f5d5d5;
+  --acc:#c8963c;--acc-l:#faebd2;
+  --warn:#c0392b;
+  --nav-w:220px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;}
+
+/* ── NAV ──────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;bottom:0;width:var(--nav-w);
+  background:var(--text);color:var(--bg);
+  overflow-y:auto;z-index:100;padding:0;
+  display:flex;flex-direction:column;
+}
+.nav-brand{
+  padding:20px 20px 16px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.nav-brand-eye{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--acc);margin-bottom:6px;
+}
+.nav-brand-title{
+  font-family:'DM Serif Display',serif;font-size:14px;line-height:1.3;
+  color:var(--bg);
+}
+.nav-links{flex:1;padding:12px 0;}
+.nav-section-head{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(245,242,236,.35);
+  padding:14px 20px 6px;
+}
+.nav-link{
+  display:block;padding:7px 20px;font-size:12px;
+  color:rgba(245,242,236,.65);text-decoration:none;
+  line-height:1.35;transition:all .15s;border-left:2px solid transparent;
+}
+.nav-link:hover{color:var(--bg);background:rgba(255,255,255,.06);border-left-color:var(--acc);}
+.nav-link.active{color:var(--bg);border-left-color:var(--acc);}
+.nav-num{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--acc);margin-right:6px;
+}
+nav footer{
+  padding:16px 20px;border-top:1px solid rgba(255,255,255,.1);
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:rgba(245,242,236,.3);line-height:1.5;
+}
+
+/* ── MAIN ─────────────────────────────────────────────── */
+main{margin-left:var(--nav-w);flex:1;max-width:1200px;}
+
+/* ── COVER ────────────────────────────────────────────── */
+.cover{
+  background:var(--text);color:var(--bg);
+  padding:60px 64px 48px;position:relative;overflow:hidden;
+}
+.cover::before{
+  content:'';position:absolute;top:-100px;right:-60px;
+  width:400px;height:400px;border-radius:50%;
+  background:rgba(200,150,60,.07);
+}
+.cover-eye{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--acc);margin-bottom:14px;
+}
+.cover h1{
+  font-family:'DM Serif Display',serif;font-size:38px;
+  line-height:1.15;max-width:640px;margin-bottom:18px;
+}
+.cover-sub{font-size:14px;color:rgba(245,242,236,.6);max-width:580px;line-height:1.7;}
+.cover-stats{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  margin-top:40px;padding-top:32px;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.cover-stat{padding:0 24px 0 0;}
+.cover-stat:first-child{padding-left:0;}
+.cs-val{font-family:'DM Serif Display',serif;font-size:28px;color:var(--acc);}
+.cs-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.4);margin-top:3px;}
+
+/* ── KEY FINDINGS ─────────────────────────────────────── */
+.key-findings{
+  background:var(--acc-l);border-bottom:1px solid var(--border);
+  padding:28px 64px;
+}
+.kf-title{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--acc);margin-bottom:16px;
+}
+.kf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.kf-item{padding:18px;background:var(--surface);border-radius:3px;border:1px solid var(--border);}
+.kf-num{
+  font-family:'DM Serif Display',serif;font-size:26px;
+  line-height:1;margin-bottom:6px;
+}
+.kf-desc{font-size:12.5px;line-height:1.55;color:var(--muted);}
+.kf-desc strong{color:var(--text);}
+
+/* ── SECTIONS ─────────────────────────────────────────── */
+.section{padding:52px 64px;border-bottom:1px solid var(--border);}
+.section:last-child{border-bottom:none;}
+.section-badge{
+  display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;
+}
+.section-num{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;
+  background:var(--text);color:var(--acc);
+  padding:3px 8px;border-radius:2px;
+}
+.section-tag{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--light);
+}
+.section h2{
+  font-family:'DM Serif Display',serif;font-size:26px;
+  margin-bottom:10px;line-height:1.2;
+}
+.section-insight{
+  font-size:13.5px;color:var(--muted);max-width:780px;
+  line-height:1.65;margin-bottom:24px;
+}
+.section-insight strong{color:var(--text);font-weight:600;}
+.chart-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;margin-bottom:8px;
+}
+.chart-src{
+  font-family:'DM Mono',monospace;font-size:9.5px;
+  color:var(--light);line-height:1.55;
+}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.two-col-wide{display:grid;grid-template-columns:3fr 2fr;gap:20px;}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+/* OEWS-specific styles (from nc_workforce_analysis) */
+.wage-chart table{width:100%;border-collapse:collapse;}
+.wage-chart thead th{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--light);
+  padding:12px 14px 10px;text-align:left;
+  border-bottom:1px solid var(--border);background:var(--surface);
+}
+.wage-chart tbody tr{border-bottom:1px solid #ede9e2;transition:background .1s;}
+.wage-chart tbody tr:hover{background:rgba(0,0,0,.02);}
+.wage-chart tbody tr:last-child{border-bottom:none;}
+.wage-chart td{padding:9px 14px;font-size:12.5px;vertical-align:middle;}
+.occ-cell{max-width:260px;line-height:1.35;}
+.occ-name{font-weight:500;font-size:13px;}
+.occ-emp{font-family:'DM Mono',monospace;font-size:10px;color:var(--light);margin-top:2px;}
+.lw-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;padding:2px 6px;border-radius:2px;text-transform:uppercase;font-weight:500;}
+.lw-above{background:#d4edda;color:#2e7d5a;}
+.lw-below{background:#fde8e8;color:#9b3a3a;}
+.bar-cell{width:240px;padding:9px 16px;}
+.bar-track{position:relative;height:18px;display:flex;align-items:center;}
+.bar-bg{position:absolute;left:0;top:3px;height:12px;background:#e8e3db;border-radius:2px;width:100%;}
+.bar-range{position:absolute;top:3px;height:12px;border-radius:2px;opacity:.85;}
+.bar-median{position:absolute;top:0;width:3px;height:18px;border-radius:1px;}
+.lw-marker{position:absolute;top:0;width:1.5px;height:18px;background:#c0392b;opacity:.65;}
+.wage-labels{display:flex;justify-content:space-between;padding:0 16px 6px;
+  font-family:'DM Mono',monospace;font-size:9px;color:var(--light);}
+.wage-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-align:right;}
+.wage-val strong{font-size:12px;color:var(--text);display:block;}
+.sector-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.sector-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:18px;position:relative;overflow:hidden;}
+.sector-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;}
+.sector-card.hc::before{background:var(--hc);}
+.sector-card.mfg::before{background:var(--mfg);}
+.sector-name{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;line-height:1.3;}
+.sector-emp{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:2px;}
+.sector-emp-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--light);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;}
+.sector-wages{display:flex;gap:10px;padding-top:12px;border-top:1px solid var(--border);}
+.sector-wage-item{flex:1;}
+.sector-wage-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--text);}
+.sector-wage-label{font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:var(--light);margin-top:2px;}
+
+/* Tier2-specific */
+.matrix-table{width:100%;border-collapse:collapse;}
+.matrix-table th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--light);padding:11px 14px 9px;text-align:left;border-bottom:1px solid var(--border);}
+.matrix-table td{padding:9px 14px;font-size:12.5px;border-bottom:1px solid #ede9e2;vertical-align:middle;}
+.matrix-table tr:last-child td{border-bottom:none;}
+.edu-tag{display:inline-block;font-size:9.5px;font-weight:500;font-family:'DM Mono',monospace;padding:2px 7px;border-radius:2px;}
+.edu-hs{background:#e8e3db;color:#5a5450;}
+.edu-cert{background:#c8e6d8;color:#1e5c3a;}
+.edu-ba{background:#c8dfe9;color:#1b4d6e;}
+.edu-grad{background:#e8c8b8;color:#5a3020;}
+.jobs-table{width:100%;border-collapse:collapse;}
+.jobs-table th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--light);padding:11px 12px 9px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;}
+.jobs-table td{padding:8px 12px;font-size:12px;border-bottom:1px solid #ede9e2;vertical-align:middle;}
+.jobs-table tr:last-child td{border-bottom:none;}
+.jobs-table tr:hover td{background:rgba(0,0,0,.015);}
+.sector-pill{display:inline-block;font-size:9px;font-weight:500;font-family:'DM Mono',monospace;padding:1px 6px;border-radius:2px;text-transform:uppercase;white-space:nowrap;}
+.sp-hc{background:var(--hc-l);color:var(--hc);}
+.sp-mfg{background:var(--mfg-l);color:var(--mfg);}
+.wage-range-cell{width:180px;}
+.wage-track{position:relative;height:16px;}
+.wage-bg2{position:absolute;left:0;top:2px;height:12px;background:#ede9e2;border-radius:2px;width:100%;}
+.wage-bar{position:absolute;top:2px;height:12px;border-radius:2px;}
+.wage-lw{position:absolute;top:0;width:1.5px;height:16px;background:var(--warn);opacity:.65;}
+.wage-dot{position:absolute;top:2px;width:3px;height:12px;border-radius:1px;}
+
+/* Apprenticeship ROI */
+.roi-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:0;}
+.roi-card{background:var(--text);color:var(--bg);border-radius:4px;padding:20px;}
+.roi-stat{font-family:'DM Serif Display',serif;font-size:34px;color:var(--acc);line-height:1;margin-bottom:6px;}
+.roi-label{font-size:12px;line-height:1.5;color:rgba(245,242,236,.7);}
+.roi-label strong{color:var(--bg);}
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+.scen-pos{background:var(--surface);border:2px solid var(--pos);border-radius:4px;padding:20px;}
+.scen-neg{background:var(--warn);border-radius:4px;padding:20px;color:#fff;}
+.scen-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;}
+.scen-pos .scen-title{color:var(--pos);}
+.scen-neg .scen-title{color:rgba(255,255,255,.8);}
+.scen-item{margin-bottom:12px;}
+.scen-val{font-family:'DM Serif Display',serif;font-size:30px;line-height:1;}
+.scen-pos .scen-val{color:var(--pos);}
+.scen-neg .scen-val{color:#fff;}
+.scen-desc{font-size:12px;margin-top:2px;}
+.scen-pos .scen-desc{color:var(--muted);}
+.scen-neg .scen-desc{color:rgba(255,255,255,.8);}
+
+/* County scroll */
+.county-scroll{max-height:560px;overflow-y:auto;}
+
+/* Legend helper */
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px;align-items:center;}
+.lg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+.lg-swatch{width:22px;height:9px;border-radius:2px;}
+
+/* Methodology */
+.method-section{background:var(--text);color:rgba(245,242,236,.6);padding:40px 64px;}
+.method-section h3{font-family:'DM Serif Display',serif;font-size:20px;color:var(--bg);margin-bottom:16px;}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.method-item h4{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:8px;}
+.method-item p{font-size:12px;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ─────────────────────────────────────────────────────────── -->
+<nav id="main-nav">
+  <div class="nav-brand">
+    <div class="nav-brand-eye">NC Workforce Analysis</div>
+    <div class="nav-brand-title">Consolidated<br>Deliverable</div>
+  </div>
+  <div class="nav-links">
+    <div class="nav-section-head">Overview</div>
+    <a class="nav-link" href="#cover">Key Findings</a>
+    <div class="nav-section-head">Context</div>
+    <a class="nav-link" href="#s1"><span class="nav-num">01</span>10-Year Outlook</a>
+    <a class="nav-link" href="#s2"><span class="nav-num">02</span>WNC Labor Market</a>
+    <div class="nav-section-head">Sector Deep-Dives</div>
+    <a class="nav-link" href="#s3"><span class="nav-num">03</span>Healthcare</a>
+    <a class="nav-link" href="#s4"><span class="nav-num">04</span>Advanced Manufacturing</a>
+    <div class="nav-section-head">Strategy</div>
+    <a class="nav-link" href="#s5"><span class="nav-num">05</span>Accessible Good Jobs</a>
+    <a class="nav-link" href="#s6"><span class="nav-num">06</span>Geographic Conditions</a>
+    <a class="nav-link" href="#s7"><span class="nav-num">07</span>Apprenticeship System</a>
+  </div>
+  <footer>April 2026<br>Bell Creek Consulting<br>NC Economic Development</footer>
+</nav>
+
+<!-- ── MAIN CONTENT ───────────────────────────────────────────────────────── -->
+<main>
+
+<!-- COVER -->
+<div id="cover" class="cover">
+  <div class="cover-eye">North Carolina Workforce Analysis — Appendix</div>
+  <h1>Labor Market Diagnostics:<br>Healthcare &amp; Advanced Manufacturing</h1>
+  <p class="cover-sub">A data-driven analysis of NC's labor market conditions, occupational wage landscapes, education-to-wage pathways, geographic disparities, and registered apprenticeship gaps — modeled on the diagnostic framework developed for Baltimore's BLocal initiative and adapted for North Carolina's economic development context.</p>
+  <div class="cover-stats">
+    <div class="cover-stat"><div class="cs-val">658K</div><div class="cs-lbl">NC HC jobs (2024)</div></div>
+    <div class="cover-stat"><div class="cs-val">474K</div><div class="cs-lbl">NC Mfg jobs (2023)</div></div>
+    <div class="cover-stat"><div class="cs-val">+500K</div><div class="cs-lbl">NC jobs projected 2022–32</div></div>
+    <div class="cover-stat"><div class="cs-val">10,255</div><div class="cs-lbl">Active apprentices (2025)</div></div>
+    <div class="cover-stat"><div class="cs-val">$36,400</div><div class="cs-lbl">Living wage benchmark</div></div>
+  </div>
+</div>
+
+<!-- KEY FINDINGS -->
+<div class="key-findings">
+  <div class="kf-title">Six Key Findings</div>
+  <div class="kf-grid">
+    <div class="kf-item">
+      <div class="kf-num" style="color:var(--hc);">51%</div>
+      <div class="kf-desc"><strong>of NC healthcare workers</strong> are in occupations where entry wages fall below the living wage — concentrated in home health aides and nursing assistants, the two largest HC roles in the state.</div>
+    </div>
+    <div class="kf-item">
+      <div class="kf-num" style="color:var(--mfg);">HS-accessible</div>
+      <div class="kf-desc"><strong>Advanced manufacturing accessible roles</strong> split nearly evenly above and below living wage — a markedly better wage mobility profile than the accessible healthcare tier.</div>
+    </div>
+    <div class="kf-item">
+      <div class="kf-num" style="color:var(--warn);">0.5%</div>
+      <div class="kf-desc"><strong>of estimated annual HC demand</strong> is covered by registered apprenticeships — the most acute supply-demand gap in the state's workforce system.</div>
+    </div>
+    <div class="kf-item">
+      <div class="kf-num" style="color:var(--neg);">+0.34pp</div>
+      <div class="kf-desc"><strong>Helene's unemployment footprint:</strong> the 26 Permanent Work counties averaged 0.34 percentage points higher unemployment YoY — vs. +0.01pp for the rest of NC.</div>
+    </div>
+    <div class="kf-item">
+      <div class="kf-num" style="color:var(--pos);">Jun 2026</div>
+      <div class="kf-desc"><strong>Federal grants funding 65%</strong> of ApprenticeshipNC expire in June 2026 — putting 10,255 active apprenticeships and the state's fastest-growing workforce pathway at risk.</div>
+    </div>
+    <div class="kf-item">
+      <div class="kf-num" style="color:var(--acc);">+16K</div>
+      <div class="kf-desc"><strong>NC manufacturing net jobs</strong> projected 2022–32, but this headline masks a sharp split: advanced sub-sectors growing while textiles (−4,200) and apparel (−2,500) shrink.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 1: 10-YEAR OUTLOOK ─────────────────────────────────────────── -->
+<div id="s1" class="section">
+  <div class="section-badge"><span class="section-num">01</span><span class="section-tag">Labor Market Context</span></div>
+  <h2>NC 10-Year Employment Outlook, 2022–2032</h2>
+  <p class="section-insight">
+    <strong>Healthcare &amp; Social Assistance will add more net jobs than any other NC sector</strong> — +101,500 over the decade. Professional &amp; Technical Services follows at +62,000. Manufacturing's net growth of +16,000 hides a significant sub-sector divergence: advanced manufacturing growing while legacy textiles and apparel shed thousands of jobs.
+  </p>
+  <div class="two-col">
+    <div>
+      <div class="chart-box"><canvas id="projChart" height="400"></canvas></div>
+      <div class="chart-src">Source: NC LEAD 2022–2032 Long-Term Employment Projections. Selected sectors; asterisked figures estimated from published regional trend data.</div>
+    </div>
+    <div>
+      <div class="chart-box"><canvas id="mfgSplitChart" height="400"></canvas></div>
+      <div class="chart-src">Source: NC LEAD 2022–2032 projections. Manufacturing sub-sector detail (NAICS 31–33). Net total: +16,000 jobs, split between growing advanced and declining legacy sub-sectors.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 2: WNC LABOR MARKET ───────────────────────────────────────── -->
+<div id="s2" class="section">
+  <div class="section-badge"><span class="section-num">02</span><span class="section-tag">Western NC Labor Market</span></div>
+  <h2>WNC Employment: Composition, Resilience &amp; Recovery</h2>
+  <p class="section-insight">
+    Western NC's 667,000-job pre-Helene economy was anchored by <strong>Education &amp; Health (24.4%)</strong> and <strong>Manufacturing (16.6%)</strong>. The hurricane caused an immediate 2.8% employment shock in October 2024, with <strong>Leisure &amp; Hospitality losing 15.6%</strong> of jobs while <strong>Education &amp; Health gained 1.1%</strong> — confirming healthcare's counter-cyclical labor market role. Recovery was underway by December but remained incomplete at year-end.
+  </p>
+  <div class="two-col" style="margin-bottom:20px;">
+    <div>
+      <div class="chart-box"><canvas id="compChart" height="320"></canvas></div>
+      <div class="chart-src">Source: NC Commerce QCEW CSVs, September 2024, 26 Permanent Work counties.</div>
+    </div>
+    <div>
+      <div class="chart-box"><canvas id="resilChart" height="320"></canvas></div>
+      <div class="chart-src">Source: NC Commerce QCEW. 2023 baseline = same Sep→Oct change prior year.</div>
+    </div>
+  </div>
+  <div class="chart-box" style="margin-bottom:8px;"><canvas id="trendChart" height="200"></canvas></div>
+  <div class="chart-src" style="margin-bottom:20px;">Source: BLS QCEW via NC Commerce LEAD, 26 Permanent Work counties, year-over-year % change Jan–Dec 2024.</div>
+  <div class="two-col">
+    <div>
+      <div class="chart-box"><canvas id="countyChart" height="480"></canvas></div>
+      <div class="chart-src">Source: NC Commerce QCEW CSVs, 26 Permanent Work counties. Alleghany excluded (statistical outlier).</div>
+    </div>
+    <div>
+      <div class="chart-box"><canvas id="empPopChart" height="480"></canvas></div>
+      <div class="chart-src">Source: NC Commerce QCEW CSVs (employment, Sept 2024) + NC OSBM county population estimates, July 2024.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3: HEALTHCARE ──────────────────────────────────────────────── -->
+<div id="s3" class="section">
+  <div class="section-badge"><span class="section-num">03</span><span class="section-tag">Healthcare Workforce</span></div>
+  <h2>Healthcare Occupational Wage Landscape — NC (NAICS 62, 2024)</h2>
+  <p class="section-insight">
+    NC's healthcare sector employs 658,780 workers and is projected to add 101,500 more by 2032 — more than any other sector. The wage distribution reveals a <strong>sharp accessibility-wage trade-off</strong>: the largest accessible roles (home health aides: 58,730 workers; nursing assistants: 53,460) pay well below living wage, while accessible credential-pathway roles like LPNs, Dental Hygienists, and Radiologic Techs offer strong wage mobility.
+  </p>
+  <div class="legend">
+    <div class="lg-item"><span class="lg-swatch" style="background:var(--hc-l);border:1px solid var(--hc-m);"></span> 10th–75th pct wage range</div>
+    <div class="lg-item"><span class="lg-swatch" style="background:var(--hc);width:6px;height:18px;border-radius:1px;"></span> Median</div>
+    <div class="lg-item"><span class="lg-swatch" style="background:#c0392b;width:1.5px;height:18px;opacity:.65;border-radius:0;"></span> Living wage ($36,400)</div>
+  </div>
+  <div class="chart-box wage-chart" id="hc-chart"></div>
+  <div class="chart-src" style="margin-bottom:24px;">Source: BLS OEWS May 2024, NAICS 62, North Carolina. Top 20 occupations by NC employment. Living wage = $36,400/yr (single adult, MIT Living Wage Calculator 2024).</div>
+
+  <p class="section-insight">
+    NC's healthcare sub-industries vary considerably in wage levels and employment mix. <strong>Hospitals (230,600 workers, median $68,320)</strong> and <strong>Physician Offices (86,480 workers, median $51,720)</strong> are the highest-wage sub-sectors. Home Health Care (40,180 workers, median $35,670) and Social Assistance (96,800 workers, median $34,060) anchor the lower end.
+  </p>
+  <div class="chart-box" style="padding:16px;">
+    <div class="sector-grid" id="mfg-sector-grid"></div>
+  </div>
+  <div class="chart-src" style="margin-bottom:24px;">Source: BLS OEWS May 2024, NAICS 62 sub-industries, North Carolina.</div>
+
+  <p class="section-insight">
+    <strong>The education × living wage matrix</strong> reveals the most strategic insight for HC workforce investment: at the HS-accessible tier, 80 occupation types (207,800 workers) pay below living wage — versus only 26 (19,230 workers) above. Certificate and associate degree pathways are the most efficient mobility investment: 22 occupation types (69,210 workers) pay above living wage.
+  </p>
+  <div class="chart-box">
+    <table class="matrix-table" id="hc-matrix-table"></table>
+  </div>
+  <div class="chart-src">Source: BLS OEWS 2024 (NC employment and wages), BLS EP Table 1.2 (education requirements). Living wage = $36,400/yr.</div>
+</div>
+
+<!-- ── SECTION 4: ADVANCED MANUFACTURING ──────────────────────────────────── -->
+<div id="s4" class="section">
+  <div class="section-badge"><span class="section-num">04</span><span class="section-tag">Advanced Manufacturing Workforce</span></div>
+  <h2>Advanced Manufacturing Wage Landscape — NC (2023)</h2>
+  <p class="section-insight">
+    NC's advanced manufacturing sector spans eight high-value sub-sectors employing 209,430 workers. <strong>Pharmaceutical &amp; Medicine (median $77,730) and Computer &amp; Electronics (median $80,100)</strong> lead on wages; Chemical (47,050 workers) and Transportation Equipment (35,490) provide the most jobs. Critically, HS-accessible roles in advanced manufacturing are <strong>far more likely to pay above living wage</strong> than equivalent-credential healthcare roles.
+  </p>
+  <div class="chart-box" style="padding:16px;">
+    <div class="sector-grid" id="mfg-only-sector-grid"></div>
+  </div>
+  <div class="chart-src" style="margin-bottom:24px;">Source: BLS OEWS 2023, NAICS 325000, 334000, 336000, 325400, 336400, 334500, 334400, 333000, 335000, North Carolina.</div>
+
+  <div class="legend">
+    <div class="lg-item"><span class="lg-swatch" style="background:var(--mfg-l);border:1px solid var(--mfg-m);"></span> 10th–75th pct wage range</div>
+    <div class="lg-item"><span class="lg-swatch" style="background:var(--mfg);width:6px;height:18px;border-radius:1px;"></span> Median</div>
+    <div class="lg-item"><span class="lg-swatch" style="background:#c0392b;width:1.5px;height:18px;opacity:.65;border-radius:0;"></span> Living wage ($36,400)</div>
+  </div>
+  <div class="chart-box wage-chart" id="mfg-chart"></div>
+  <div class="chart-src" style="margin-bottom:24px;">Source: BLS OEWS 2023, advanced manufacturing sub-sectors, North Carolina. Top 20 occupations by NC employment across 8 sub-sectors.</div>
+
+  <p class="section-insight">
+    In advanced manufacturing, <strong>50 HS-accessible occupation types (63,210 workers) pay above living wage</strong> — compared to just 29 below. Every certificate/associate credential manufacturing occupation pays above living wage. This inverts the healthcare pattern and makes manufacturing the stronger wage-mobility bet for workers without four-year degrees.
+  </p>
+  <div class="chart-box">
+    <table class="matrix-table" id="mfg-matrix-table"></table>
+  </div>
+  <div class="chart-src">Source: BLS OEWS 2023 (NC employment and wages), BLS EP Table 1.2 (education requirements). Aggregated across 8 advanced manufacturing sub-sectors.</div>
+</div>
+
+<!-- ── SECTION 5: ACCESSIBLE GOOD JOBS ───────────────────────────────────── -->
+<div id="s5" class="section">
+  <div class="section-badge"><span class="section-num">05</span><span class="section-tag">Strategic Pathway Targets</span></div>
+  <h2>Accessible Good Jobs: Entry ≥ Living Wage, No Four-Year Degree Required</h2>
+  <p class="section-insight">
+    These 18 occupations — spanning both target sectors — represent the highest-priority targets for workforce training investment: roles where entry wages clear the living wage threshold and a four-year degree is not the typical path in. National annual openings provide a demand signal for appropriate training program scale.
+  </p>
+  <div class="chart-box">
+    <table class="jobs-table" id="jobs-table"></table>
+  </div>
+  <div class="chart-src">Source: NC OEWS 2024 (HC) and 2023 (Adv. Mfg). Education: BLS EP Table 1.2. National annual openings in thousands. Living wage = $36,400/yr.</div>
+</div>
+
+<!-- ── SECTION 6: GEOGRAPHIC CONDITIONS ──────────────────────────────────── -->
+<div id="s6" class="section">
+  <div class="section-badge"><span class="section-num">06</span><span class="section-tag">Geographic Labor Markets</span></div>
+  <h2>Unemployment Rates, All 100 NC Counties — 2024 Annual Average</h2>
+  <p class="section-insight">
+    Two structurally different unemployment stories coexist in NC. <strong>Eastern NC counties</strong> (Hyde 5.6%, Edgecombe/Halifax/Scotland 5.2%) show persistently elevated unemployment rooted in long-running economic challenges. Separately, <strong>Helene's statistical footprint is quantifiable</strong>: the 26 Permanent Work counties averaged +0.34pp higher unemployment YoY vs. +0.01pp for the rest of the state — Buncombe (+1.4pp), Mitchell (+1.1pp), and Avery (+1.0pp) absorbed the sharpest shocks.
+  </p>
+  <div class="chart-box">
+    <div class="county-scroll">
+      <canvas id="countyCanvas2" height="2100"></canvas>
+    </div>
+  </div>
+  <div class="chart-src">Source: NC Commerce LEAD, BLS LAUS 2024 annual averages (not seasonally adjusted). NC statewide 2024 annual average: 3.7%. Red = Helene Permanent Work county.</div>
+</div>
+
+<!-- ── SECTION 7: APPRENTICESHIP ─────────────────────────────────────────── -->
+<div id="s7" class="section">
+  <div class="section-badge"><span class="section-num">07</span><span class="section-tag">Apprenticeship System</span></div>
+  <h2>ApprenticeshipNC: Growth, Gaps &amp; the Funding Cliff</h2>
+  <p class="section-insight">
+    NC's registered apprenticeship system is growing fast but remains <strong>a tiny fraction of actual workforce demand</strong> — especially in healthcare (0.5% of estimated annual openings) and manufacturing (1.3%). The program's momentum is fueled by federal grants that expire in June 2026. Without $3.1M in annual state investment, active participation could fall from 10,255 to ~4,000 by 2034.
+  </p>
+
+  <div class="roi-trio" style="margin-bottom:20px;">
+    <div class="roi-card"><div class="roi-stat">$400K</div><div class="roi-label"><strong>Lifetime wage premium</strong> for completers vs. non-apprentices (~$10K/yr)</div></div>
+    <div class="roi-card"><div class="roi-stat">90%</div><div class="roi-label"><strong>5-year employer retention</strong> of apprenticeship completers</div></div>
+    <div class="roi-card"><div class="roi-stat">69%</div><div class="roi-label"><strong>Completion rate</strong> in FY 2024-25; 3,686 completers statewide</div></div>
+  </div>
+
+  <div class="two-col" style="margin-bottom:20px;">
+    <div>
+      <div class="chart-box"><canvas id="trendCanvas" height="260"></canvas></div>
+      <div class="chart-src">Source: ApprenticeshipNC Annual Reports FY18–FY25. Projections from FY24-25 Annual Report funding scenarios.</div>
+    </div>
+    <div>
+      <div class="chart-box"><canvas id="sectorCanvas" height="260"></canvas></div>
+      <div class="chart-src">Source: ApprenticeshipNC Annual Reports FY21-22 (served by industry) and FY24-25 (new enrollments by occupation family).</div>
+    </div>
+  </div>
+
+  <div class="chart-box" style="margin-bottom:8px;"><canvas id="gapCanvas" height="280"></canvas></div>
+  <div class="chart-src" style="margin-bottom:20px;">Apprenticeship supply: ApprenticeshipNC new enrollments FY24-25. NC annual demand estimated from BLS EP national openings (NC ≈ 3.0% share) and NC sector employment × sector turnover rates.</div>
+
+  <div class="scenario-grid">
+    <div class="scen-pos">
+      <div class="scen-title">With $3.1M/yr state investment</div>
+      <div class="scen-item"><div class="scen-val">52,000</div><div class="scen-desc">Active apprentices by 2034</div></div>
+      <div class="scen-item"><div class="scen-val">$2.15B</div><div class="scen-desc">Incremental wages for completers over 10 years</div></div>
+      <div class="scen-item"><div class="scen-val">478% ROI</div><div class="scen-desc">Return on state investment in incremental tax revenue alone</div></div>
+    </div>
+    <div class="scen-neg">
+      <div class="scen-title">Without new state investment</div>
+      <div class="scen-item"><div class="scen-val">~4,000</div><div class="scen-desc">Active apprentices by 2034 — back to pre-grant levels</div></div>
+      <div class="scen-item"><div class="scen-val">18 lost</div><div class="scen-desc">Technical assistance experts — the state's primary RA support infrastructure</div></div>
+      <div class="scen-item"><div class="scen-val">Zero</div><div class="scen-desc">Marketing capacity — employer pipeline growth stops</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── METHODOLOGY ────────────────────────────────────────────────────────── -->
+<div class="method-section">
+  <h3>Data Sources &amp; Methodology</h3>
+  <div class="method-grid">
+    <div class="method-item">
+      <h4>Labor Market Data</h4>
+      <p>BLS Quarterly Census of Employment &amp; Wages (QCEW) via NC Commerce LEAD; BLS Local Area Unemployment Statistics (LAUS) 2024 annual averages via FRED; BLS Occupational Employment &amp; Wage Statistics (OEWS) May 2024 (NAICS 62) and May 2023 (NAICS 31–33). NC LEAD 2022–2032 Long-Term Employment Projections.</p>
+    </div>
+    <div class="method-item">
+      <h4>Education &amp; Occupation Data</h4>
+      <p>BLS Employment Projections Table 1.2 (2024–34): occupational projections, education requirements, on-the-job training, annual openings, and median wages for 832 detailed occupations. Living wage benchmark: MIT Living Wage Calculator 2024, single adult, North Carolina (~$17.50/hr, $36,400/yr).</p>
+    </div>
+    <div class="method-item">
+      <h4>Apprenticeship Data</h4>
+      <p>ApprenticeshipNC Annual Reports FY 2018–2025 (submitted per NCGS 115D-11.6 to the NC General Assembly). Helene impact data: NC Commerce LEAD Hurricane Helene labor market analysis, July 2025. Population: NC OSBM county estimates, July 2024. Demand estimates are directional proxies using national openings × NC employment share.</p>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+
+const LIVING_WAGE = 36400;
+const MAX_WAGE = 145000;
+
+function fmt(v) {
+  if (v == null) return '—';
+  return '$' + Math.round(v/1000) + 'K';
+}
+function fmtEmp(v) {
+  return v >= 1000 ? (v/1000).toFixed(1) + 'K' : v.toString();
+}
+
+function pct(v) {
+  return Math.min(100, Math.max(0, (v / MAX_WAGE) * 100));
+}
+
+function buildChart(containerId, data, color, colorLight, colorMid) {
+  const container = document.getElementById(containerId);
+
+  let html = `
+    <table>
+      <thead>
+        <tr>
+          <th style="width:260px">Occupation</th>
+          <th class="center" style="width:90px">Entry (P10)</th>
+          <th class="center" style="width:90px">Median</th>
+          <th class="center" style="width:90px">75th Pct</th>
+          <th style="width:320px; padding-left:16px">Wage Distribution</th>
+          <th class="right" style="width:90px">Living Wage</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  data.forEach(d => {
+    const p10pct = d.p10 ? pct(d.p10) : 0;
+    const medpct = pct(d.median);
+    const p75pct = d.p75 ? pct(d.p75) : medpct + 8;
+    const lwpct = pct(LIVING_WAGE);
+    const aboveLW = d.entry_above_lw;
+    const shortName = d.occ.length > 42 ? d.occ.substring(0, 40) + '…' : d.occ;
+
+    html += `
+      <tr>
+        <td class="occ-cell">
+          <div class="occ-name" title="${d.occ}">${shortName}</div>
+          <div class="occ-emp">${fmtEmp(d.emp)} workers</div>
+        </td>
+        <td class="wage-val">${fmt(d.p10)}</td>
+        <td class="wage-val"><strong>${fmt(d.median)}</strong></td>
+        <td class="wage-val">${fmt(d.p75)}</td>
+        <td class="bar-cell">
+          <div class="bar-track">
+            <div class="bar-bg"></div>
+            <div class="bar-range" style="left:${p10pct}%; width:${Math.max(p75pct - p10pct, 2)}%; background:${colorLight}; border: 1px solid ${colorMid};"></div>
+            <div class="bar-median" style="left:${medpct}%; background:${color};"></div>
+            <div class="lw-marker" style="left:${lwpct}%;"></div>
+          </div>
+        </td>
+        <td style="text-align:right; padding-right:20px;">
+          <span class="lw-badge ${aboveLW ? 'lw-above' : 'lw-below'}">${aboveLW ? 'Entry ≥ LW' : 'Entry &lt; LW'}</span>
+        </td>
+      </tr>
+    `;
+  });
+
+  html += '</tbody></table>';
+  html += `<div class="wage-labels"><span>$0</span><span>$36K (LW)</span><span>$72K</span><span>$108K</span><span>$145K+</span></div>`;
+  container.innerHTML = html;
+}
+
+function buildSectorGrid(data) {
+  const grid = document.getElementById('mfg-sector-grid');
+  grid.innerHTML = data.map(d => `
+    <div class="sector-card mfg">
+      <div class="sector-name">${d.sector}</div>
+      <div class="sector-emp">${fmtEmp(d.emp)}</div>
+      <div class="sector-emp-label">Total workers</div>
+      <div class="sector-wages">
+        <div class="sector-wage-item">
+          <div class="sector-wage-val">${fmt(d.p10)}</div>
+          <div class="sector-wage-label">Entry (P10)</div>
+        </div>
+        <div class="sector-wage-item">
+          <div class="sector-wage-val">${fmt(d.median)}</div>
+          <div class="sector-wage-label">Median</div>
+        </div>
+        <div class="sector-wage-item">
+          <div class="sector-wage-val">${fmt(d.p75)}</div>
+          <div class="sector-wage-label">75th Pct</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Data ─────────────────────────────────────────────────────────────────────
+
+const hcData = [
+  {"occ":"Registered Nurses","emp":90800,"p10":66460,"median":81860,"p75":98370,"entry_above_lw":true},
+  {"occ":"Home Health and Personal Care Aides","emp":58730,"p10":23240,"median":30100,"p75":34390,"entry_above_lw":false},
+  {"occ":"Nursing Assistants","emp":53460,"p10":29070,"median":37360,"p75":40310,"entry_above_lw":false},
+  {"occ":"Medical Secretaries and Administrative Assistants","emp":42800,"p10":32350,"median":39960,"p75":46200,"entry_above_lw":false},
+  {"occ":"Medical Assistants","emp":22720,"p10":34900,"median":42700,"p75":46390,"entry_above_lw":false},
+  {"occ":"Preschool Teachers, Except Special Education","emp":15150,"p10":23860,"median":30530,"p75":35850,"entry_above_lw":false},
+  {"occ":"Licensed Practical and Licensed Vocational Nurses","emp":14000,"p10":49030,"median":60590,"p75":64540,"entry_above_lw":true},
+  {"occ":"Physicians, All Other","emp":12800,"p10":65810,"median":222990,"p75":null,"entry_above_lw":true},
+  {"occ":"Medical and Health Services Managers","emp":12420,"p10":67090,"median":104130,"p75":133710,"entry_above_lw":true},
+  {"occ":"Clinical Laboratory Technologists and Technicians","emp":10940,"p10":37500,"median":59080,"p75":76380,"entry_above_lw":true},
+  {"occ":"Dental Assistants","emp":10480,"p10":37180,"median":48630,"p75":56800,"entry_above_lw":true},
+  {"occ":"Maids and Housekeeping Cleaners","emp":9530,"p10":26050,"median":35220,"p75":37300,"entry_above_lw":false},
+  {"occ":"Receptionists and Information Clerks","emp":8410,"p10":29640,"median":38230,"p75":41480,"entry_above_lw":false},
+  {"occ":"Substance Abuse, Behavioral Disorder, and Mental Health Counselors","emp":7670,"p10":38680,"median":55070,"p75":65370,"entry_above_lw":true},
+  {"occ":"Physician Assistants","emp":7630,"p10":99500,"median":128300,"p75":138080,"entry_above_lw":true},
+  {"occ":"Radiologic Technologists and Technicians","emp":7370,"p10":51020,"median":66910,"p75":79470,"entry_above_lw":true},
+  {"occ":"Nurse Practitioners","emp":7080,"p10":99970,"median":125980,"p75":137650,"entry_above_lw":true},
+  {"occ":"First-Line Supervisors of Office and Administrative Support Workers","emp":7050,"p10":44610,"median":60330,"p75":70650,"entry_above_lw":true},
+  {"occ":"Physical Therapists","emp":7000,"p10":74870,"median":96920,"p75":106860,"entry_above_lw":true},
+  {"occ":"Dental Hygienists","emp":6520,"p10":77830,"median":89960,"p75":96470,"entry_above_lw":true}
+];
+
+const mfgSectorData = [
+  {"sector":"Pharmaceutical & Medicine","emp":25540,"p10":44110,"median":77730,"p75":120560},
+  {"sector":"Computer & Electronics","emp":28230,"p10":34870,"median":80100,"p75":129880},
+  {"sector":"Aerospace & Parts","emp":6120,"p10":48310,"median":76980,"p75":93980},
+  {"sector":"Chemical","emp":47050,"p10":38590,"median":63570,"p75":97980},
+  {"sector":"Transportation Equipment","emp":35490,"p10":36290,"median":52930,"p75":66880},
+  {"sector":"Machinery","emp":37250,"p10":36200,"median":50600,"p75":73300},
+  {"sector":"Electrical Equipment","emp":21310,"p10":35670,"median":50220,"p75":72070},
+  {"sector":"Instruments & Controls","emp":7980,"p10":29730,"median":61380,"p75":101350}
+];
+
+const mfgOccData = [
+  {"occ":"Miscellaneous Assemblers and Fabricators","emp":20620,"p10":31510,"median":40093,"p75":49563,"entry_above_lw":false},
+  {"occ":"Electrical & Electromechanical Assemblers","emp":7870,"p10":29934,"median":40634,"p75":47448,"entry_above_lw":false},
+  {"occ":"Inspectors, Testers, Sorters, Samplers, and Weighers","emp":7700,"p10":36854,"median":50668,"p75":63550,"entry_above_lw":true},
+  {"occ":"Chemical Equipment Operators and Tenders","emp":6770,"p10":41110,"median":50290,"p75":61335,"entry_above_lw":true},
+  {"occ":"Industrial Engineers","emp":6660,"p10":67030,"median":97085,"p75":113631,"entry_above_lw":true},
+  {"occ":"First-Line Supervisors of Production Workers","emp":6330,"p10":50979,"median":73463,"p75":90765,"entry_above_lw":true},
+  {"occ":"Packaging and Filling Machine Operators","emp":5400,"p10":38220,"median":44725,"p75":52255,"entry_above_lw":true},
+  {"occ":"Machinists","emp":5180,"p10":41143,"median":54410,"p75":61047,"entry_above_lw":true},
+  {"occ":"Laborers and Freight, Stock, and Material Movers","emp":4830,"p10":34654,"median":41297,"p75":48781,"entry_above_lw":false},
+  {"occ":"Welders, Cutters, Solderers, and Brazers","emp":4440,"p10":37212,"median":51962,"p75":58012,"entry_above_lw":true},
+  {"occ":"General and Operations Managers","emp":3800,"p10":78075,"median":149075,"p75":208410,"entry_above_lw":true},
+  {"occ":"Industrial Production Managers","emp":3590,"p10":80425,"median":123476,"p75":155273,"entry_above_lw":true},
+  {"occ":"Software Developers","emp":3200,"p10":76587,"median":121456,"p75":144894,"entry_above_lw":true},
+  {"occ":"Mechanical Engineers","emp":3060,"p10":71075,"median":98211,"p75":120400,"entry_above_lw":true},
+  {"occ":"Industrial Machinery Mechanics","emp":3030,"p10":47146,"median":63083,"p75":73766,"entry_above_lw":true},
+  {"occ":"Maintenance and Repair Workers, General","emp":2990,"p10":41409,"median":60761,"p75":69133,"entry_above_lw":true},
+  {"occ":"Chemists","emp":2960,"p10":50785,"median":75345,"p75":91805,"entry_above_lw":true},
+  {"occ":"Mixing and Blending Machine Operators","emp":2950,"p10":38835,"median":45488,"p75":52765,"entry_above_lw":true},
+  {"occ":"Customer Service Representatives","emp":2810,"p10":38569,"median":51827,"p75":63221,"entry_above_lw":true},
+  {"occ":"Shipping, Receiving, and Inventory Clerks","emp":2790,"p10":34226,"median":41683,"p75":47224,"entry_above_lw":false}
+];
+
+buildChart('hc-chart', hcData, 'var(--hc-primary)', 'var(--hc-light)', 'var(--hc-mid)');
+buildSectorGrid(mfgSectorData);
+buildChart('mfg-chart', mfgOccData, 'var(--mfg-primary)', 'var(--mfg-light)', 'var(--mfg-mid)');
+
+
+
+// ─── SHARED HELPERS ─────────────────────────────────────────────────────────
+
+function fmtK(v) {
+  if (Math.abs(v) >= 1000) return (v/1000).toFixed(0)+'K';
+  return v.toString();
+}
+
+function drawBarChart(canvasId, opts) {
+  // opts: { labels, datasets:[{values, colors, label}], orientation, showBaseline, baselineValues, baselineColor, maxVal, minVal, barThick, padding, labelFont, valueFont, zeroline }
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const font = opts.labelFont || "12px 'Instrument Sans', sans-serif";
+  const vFont = opts.valueFont || "11px 'DM Mono', monospace";
+  const pad = opts.padding || { top: 20, right: 60, bottom: 30, left: 170 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+
+  ctx.font = font;
+  ctx.fillStyle = '#6b6560';
+
+  const n = opts.labels.length;
+  const barH = opts.barThick || Math.min(22, (chartH / n) * 0.55);
+  const rowH = chartH / n;
+
+  const allVals = opts.datasets.flatMap(d => d.values).concat(opts.baselineValues || []);
+  const minVal = opts.minVal !== undefined ? opts.minVal : Math.min(...allVals, 0);
+  const maxVal = opts.maxVal !== undefined ? opts.maxVal : Math.max(...allVals, 0);
+  const range = maxVal - minVal;
+  const zeroX = pad.left + ((-minVal) / range) * chartW;
+
+  // Grid lines
+  const gridVals = [];
+  const step = range > 30 ? 10 : range > 10 ? 5 : 2;
+  for (let v = Math.ceil(minVal/step)*step; v <= maxVal; v += step) gridVals.push(v);
+
+  gridVals.forEach(v => {
+    const x = pad.left + ((v - minVal) / range) * chartW;
+    ctx.strokeStyle = '#ede9e2';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + chartH); ctx.stroke();
+    ctx.fillStyle = '#9b948c';
+    ctx.font = "10px 'DM Mono', monospace";
+    ctx.textAlign = 'center';
+    ctx.fillText((v > 0 ? '+' : '') + v + '%', x, pad.top + chartH + 16);
+  });
+
+  // Zero line
+  if (minVal < 0) {
+    ctx.strokeStyle = '#888075';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(zeroX, pad.top); ctx.lineTo(zeroX, pad.top + chartH); ctx.stroke();
+  }
+
+  opts.labels.forEach((label, i) => {
+    const y = pad.top + i * rowH + rowH / 2;
+    const ds = opts.datasets[0];
+    const val = ds.values[i];
+    const color = Array.isArray(ds.colors) ? ds.colors[i] : ds.colors;
+
+    // Label
+    ctx.font = font;
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'right';
+    ctx.fillText(label, pad.left - 8, y + 4);
+
+    // Baseline bar
+    if (opts.baselineValues && opts.baselineValues[i] != null) {
+      const bv = opts.baselineValues[i];
+      const bx = bv >= 0 ? zeroX : pad.left + ((bv - minVal) / range) * chartW;
+      const bw = Math.abs(bv / range * chartW);
+      ctx.fillStyle = opts.baselineColor || '#c8c0b8';
+      ctx.globalAlpha = 0.5;
+      const bOff = barH * 0.5;
+      ctx.fillRect(bx, y - barH/2 - bOff, bw, barH * 0.7);
+      ctx.globalAlpha = 1.0;
+    }
+
+    // Main bar
+    const x0 = val >= 0 ? zeroX : pad.left + ((val - minVal) / range) * chartW;
+    const barW = Math.max(2, Math.abs(val / range * chartW));
+    ctx.fillStyle = color;
+    ctx.fillRect(x0, y - barH/2, barW, barH);
+
+    // Value label
+    ctx.font = vFont;
+    ctx.fillStyle = '#1a1714';
+    const labelX = val >= 0 ? x0 + barW + 4 : x0 - 4;
+    ctx.textAlign = val >= 0 ? 'left' : 'right';
+    ctx.fillText((val > 0 ? '+' : '') + val + '%', labelX, y + 4);
+  });
+}
+
+// ─── COLOUR HELPERS ─────────────────────────────────────────────────────────
+function barColor(val, isHealthcare) {
+  if (isHealthcare) return '#1b4d6e';
+  return val >= 0 ? '#2e7d5a' : '#9b3a3a';
+}
+
+// ─── 1. TREND LINE ──────────────────────────────────────────────────────────
+(function() {
+  const data = [1.09,1.19,1.34,1.22,1.59,0.74,1.41,1.30,1.13,-2.83,-1.81,-1.43];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const canvas = document.getElementById('trendChart');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = { top: 28, right: 40, bottom: 36, left: 56 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const minY = -3.2, maxY = 2.0;
+  const yRange = maxY - minY;
+  const toX = i => pad.left + (i / (data.length - 1)) * cW;
+  const toY = v => pad.top + ((maxY - v) / yRange) * cH;
+
+  // Grid
+  [-3,-2,-1,0,1,2].forEach(v => {
+    const y = toY(v);
+    ctx.strokeStyle = v === 0 ? '#888075' : '#ede9e2';
+    ctx.lineWidth = v === 0 ? 1.5 : 1;
+    ctx.setLineDash(v === 0 ? [] : [3, 3]);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + cW, y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = "10px 'DM Mono', monospace";
+    ctx.fillStyle = '#9b948c';
+    ctx.textAlign = 'right';
+    ctx.fillText((v > 0 ? '+' : '') + v + '%', pad.left - 6, y + 3);
+  });
+
+  // Helene shade
+  const shadeX = toX(9);
+  ctx.fillStyle = 'rgba(192,57,43,0.08)';
+  ctx.fillRect(shadeX, pad.top, cW - (shadeX - pad.left), cH);
+  ctx.font = "10px 'DM Mono', monospace";
+  ctx.fillStyle = '#c0392b';
+  ctx.textAlign = 'center';
+  ctx.fillText('← Helene landfall', shadeX + (cW - (shadeX - pad.left)) / 2, pad.top + 14);
+
+  // Pre/post fill areas
+  const prePoints = data.slice(0, 9).map((v, i) => [toX(i), toY(v)]);
+  const postPoints = data.slice(9).map((v, i) => [toX(i + 9), toY(v)]);
+
+  function fillArea(points, color, yZero) {
+    ctx.beginPath();
+    ctx.moveTo(points[0][0], yZero);
+    points.forEach(([x, y]) => ctx.lineTo(x, y));
+    ctx.lineTo(points[points.length - 1][0], yZero);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  const zeroY = toY(0);
+  fillArea(prePoints, 'rgba(46,125,90,0.12)', zeroY);
+  fillArea(postPoints, 'rgba(155,58,58,0.12)', zeroY);
+
+  // Line
+  ctx.beginPath();
+  data.forEach((v, i) => {
+    const x = toX(i), y = toY(v);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = '#1a1714';
+  ctx.lineWidth = 2;
+  ctx.lineJoin = 'round';
+  ctx.setLineDash([]);
+  ctx.stroke();
+
+  // Dots + labels
+  data.forEach((v, i) => {
+    const x = toX(i), y = toY(v);
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = v < 0 ? '#9b3a3a' : '#2e7d5a';
+    ctx.fill();
+    ctx.strokeStyle = '#faf8f4'; ctx.lineWidth = 1.5;
+    ctx.stroke();
+    // Value labels for key points
+    if (i === 4 || i === 9 || i === 11) {
+      ctx.font = "10px 'DM Mono', monospace";
+      ctx.fillStyle = v < 0 ? '#9b3a3a' : '#2e7d5a';
+      ctx.textAlign = 'center';
+      ctx.fillText((v > 0 ? '+' : '') + v + '%', x, y - 10);
+    }
+  });
+
+  // Month labels
+  months.forEach((m, i) => {
+    ctx.font = "10px 'Instrument Sans', sans-serif";
+    ctx.fillStyle = '#9b948c';
+    ctx.textAlign = 'center';
+    ctx.fillText(m, toX(i), H - 6);
+  });
+})();
+
+// ─── 2. SECTOR COMPOSITION ──────────────────────────────────────────────────
+(function() {
+  const data = [
+    { sector: 'Education & Health', emp: 150436, share: 24.4 },
+    { sector: 'Trade, Transport & Utils', emp: 102962, share: 16.7 },
+    { sector: 'Manufacturing', emp: 102420, share: 16.6 },
+    { sector: 'Leisure & Hospitality', emp: 91914, share: 14.9 },
+    { sector: 'Professional & Business', emp: 48884, share: 7.9 },
+    { sector: 'Public Administration', emp: 38679, share: 6.3 },
+    { sector: 'Construction', emp: 36027, share: 5.8 },
+    { sector: 'Other Services', emp: 18908, share: 3.1 },
+    { sector: 'Financial Activities', emp: 18504, share: 3.0 },
+    { sector: 'Information', emp: 6245, share: 1.0 },
+    { sector: 'Natural Resources', emp: 1559, share: 0.3 },
+  ];
+
+  const colors = {
+    'Education & Health': '#1b4d6e',
+    'Leisure & Hospitality': '#c0392b',
+    'Manufacturing': '#5a3020',
+    'Trade, Transport & Utils': '#888075',
+    'Professional & Business': '#4a7c6a',
+    'Public Administration': '#7a6a50',
+    'Construction': '#b86040',
+    'Other Services': '#a0948a',
+    'Financial Activities': '#8a9070',
+    'Information': '#b0a898',
+    'Natural Resources': '#c8c0b8',
+  };
+
+  const canvas = document.getElementById('compChart');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = { top: 16, right: 80, bottom: 16, left: 156 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const n = data.length;
+  const rowH = cH / n;
+  const barH = Math.min(20, rowH * 0.6);
+  const maxShare = 26;
+
+  data.forEach((d, i) => {
+    const y = pad.top + i * rowH + rowH / 2;
+    const barW = (d.share / maxShare) * cW;
+    const color = colors[d.sector] || '#888075';
+
+    ctx.font = "12px 'Instrument Sans', sans-serif";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.sector, pad.left - 8, y + 4);
+
+    ctx.fillStyle = color;
+    ctx.fillRect(pad.left, y - barH / 2, barW, barH);
+
+    ctx.font = "10.5px 'DM Mono', monospace";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'left';
+    ctx.fillText(d.share + '%  ' + (d.emp/1000).toFixed(0) + 'K', pad.left + barW + 6, y + 4);
+  });
+})();
+
+// ─── 3. SECTOR RESILIENCE ────────────────────────────────────────────────────
+(function() {
+  const data = [
+    { sector: 'Leisure & Hospitality', v24: -15.6, v23: -1.9 },
+    { sector: 'Other Services', v24: -4.9, v23: 1.5 },
+    { sector: 'Manufacturing', v24: -1.6, v23: -0.2 },
+    { sector: 'Construction', v24: -1.3, v23: 2.5 },
+    { sector: 'Financial Activities', v24: -0.7, v23: 1.7 },
+    { sector: 'Information', v24: -0.4, v23: -0.3 },
+    { sector: 'Prof & Business Svcs', v24: -0.3, v23: 1.4 },
+    { sector: 'Public Administration', v24: 0.7, v23: -0.2 },
+    { sector: 'Education & Health', v24: 1.1, v23: 8.2 },
+    { sector: 'Trade, Transport & Utils', v24: 2.6, v23: 4.4 },
+  ];
+
+  const canvas = document.getElementById('resilChart');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = { top: 16, right: 68, bottom: 36, left: 144 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const minV = -17, maxV = 10;
+  const range = maxV - minV;
+  const zeroX = pad.left + ((-minV) / range) * cW;
+  const n = data.length;
+  const rowH = cH / n;
+  const barH = Math.min(16, rowH * 0.45);
+
+  // Grid
+  [-15,-10,-5,0,5,10].forEach(v => {
+    const x = pad.left + ((v - minV) / range) * cW;
+    ctx.strokeStyle = v === 0 ? '#888075' : '#ede9e2';
+    ctx.lineWidth = v === 0 ? 1.5 : 1;
+    ctx.setLineDash(v === 0 ? [] : [2, 3]);
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + cH); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = "9px 'DM Mono', monospace";
+    ctx.fillStyle = '#9b948c';
+    ctx.textAlign = 'center';
+    ctx.fillText((v > 0 ? '+' : '') + v + '%', x, pad.top + cH + 16);
+  });
+
+  data.forEach((d, i) => {
+    const y = pad.top + i * rowH + rowH / 2;
+
+    ctx.font = "11px 'Instrument Sans', sans-serif";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.sector, pad.left - 8, y + 4);
+
+    // 2023 bar (background)
+    const b23x = d.v23 >= 0 ? zeroX : pad.left + ((d.v23 - minV) / range) * cW;
+    const bw23 = Math.abs(d.v23 / range * cW);
+    ctx.fillStyle = '#c8c0b8';
+    ctx.globalAlpha = 0.55;
+    ctx.fillRect(b23x, y - barH - 3, bw23, barH);
+    ctx.globalAlpha = 1;
+
+    // 2024 bar
+    const isHc = d.sector === 'Education & Health';
+    const b24color = d.v24 >= 0 ? (isHc ? '#1b4d6e' : '#2e7d5a') : (d.sector === 'Leisure & Hospitality' ? '#c0392b' : '#9b3a3a');
+    const b24x = d.v24 >= 0 ? zeroX : pad.left + ((d.v24 - minV) / range) * cW;
+    const bw24 = Math.abs(d.v24 / range * cW);
+    ctx.fillStyle = b24color;
+    ctx.fillRect(b24x, y + 3, bw24, barH);
+
+    // Value label
+    ctx.font = "9.5px 'DM Mono', monospace";
+    ctx.fillStyle = b24color;
+    const lx = d.v24 >= 0 ? b24x + bw24 + 3 : b24x - 3;
+    ctx.textAlign = d.v24 >= 0 ? 'left' : 'right';
+    ctx.fillText((d.v24 > 0 ? '+' : '') + d.v24 + '%', lx, y + barH / 2 + 6);
+  });
+
+  // Legend
+  const lY = pad.top + cH + 28;
+  ctx.fillStyle = '#c8c0b8'; ctx.globalAlpha = 0.55;
+  ctx.fillRect(pad.left, lY - 8, 20, 8);
+  ctx.globalAlpha = 1;
+  ctx.font = "10px 'DM Mono', monospace"; ctx.fillStyle = '#6b6560';
+  ctx.textAlign = 'left';
+  ctx.fillText('2023 baseline', pad.left + 24, lY);
+  ctx.fillStyle = '#888075';
+  ctx.fillRect(pad.left + 110, lY - 8, 20, 8);
+  ctx.fillText('2024 actual', pad.left + 134, lY);
+})();
+
+// ─── 4. COUNTY SHOCK ─────────────────────────────────────────────────────────
+(function() {
+  const raw = [
+    { county: 'Avery', chg24: -13.5, chg23: 3.4 },
+    { county: 'Yancey', chg24: -11.4, chg23: 0.3 },
+    { county: 'Buncombe', chg24: -9.3, chg23: 1.6 },
+    { county: 'Mitchell', chg24: -6.5, chg23: 1.5 },
+    { county: 'Watauga', chg24: -4.2, chg23: 1.3 },
+    { county: 'Henderson', chg24: -3.4, chg23: 1.2 },
+    { county: 'Haywood', chg24: -3.4, chg23: 0.0 },
+    { county: 'Polk', chg24: -3.3, chg23: 2.0 },
+    { county: 'Swain', chg24: -3.2, chg23: 0.5 },
+    { county: 'Madison', chg24: -2.8, chg23: 5.9 },
+    { county: 'Ashe', chg24: -1.8, chg23: 1.2 },
+    { county: 'Burke', chg24: -1.6, chg23: 2.1 },
+    { county: 'Wilkes', chg24: -1.6, chg23: -0.7 },
+    { county: 'Rutherford', chg24: -1.5, chg23: 0.4 },
+    { county: 'Macon', chg24: -1.3, chg23: 1.6 },
+    { county: 'McDowell', chg24: -0.9, chg23: 0.2 },
+    { county: 'Clay', chg24: -0.8, chg23: 0.9 },
+    { county: 'Transylvania', chg24: -0.8, chg23: 0.3 },
+    { county: 'Caldwell', chg24: -0.2, chg23: 1.4 },
+    { county: 'Jackson', chg24: 0.2, chg23: 1.2 },
+    { county: 'Alexander', chg24: 0.3, chg23: 0.9 },
+    { county: 'Catawba', chg24: 0.3, chg23: 0.3 },
+    { county: 'Lincoln', chg24: 0.4, chg23: 1.8 },
+    { county: 'Gaston', chg24: 0.5, chg23: 0.8 },
+    { county: 'Cleveland', chg24: 0.6, chg23: 1.0 },
+  ];
+
+  const canvas = document.getElementById('countyChart');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = { top: 16, right: 70, bottom: 36, left: 110 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+  ctx.clearRect(0, 0, W, H);
+
+  const minV = -15, maxV = 7;
+  const range = maxV - minV;
+  const zeroX = pad.left + ((-minV) / range) * cW;
+  const n = raw.length;
+  const rowH = cH / n;
+  const barH = Math.min(14, rowH * 0.5);
+
+  [-14,-12,-10,-8,-6,-4,-2,0,2,4,6].forEach(v => {
+    const x = pad.left + ((v - minV) / range) * cW;
+    ctx.strokeStyle = v === 0 ? '#888075' : '#ede9e2';
+    ctx.lineWidth = v === 0 ? 1.5 : 1;
+    ctx.setLineDash(v === 0 ? [] : [2, 3]);
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + cH); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = "9px 'DM Mono', monospace";
+    ctx.fillStyle = '#9b948c';
+    ctx.textAlign = 'center';
+    ctx.fillText((v > 0 ? '+' : '') + v + '%', x, pad.top + cH + 16);
+  });
+
+  raw.forEach((d, i) => {
+    const y = pad.top + i * rowH + rowH / 2;
+    ctx.font = "11px 'Instrument Sans', sans-serif";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.county, pad.left - 6, y + 4);
+
+    // Baseline bar
+    const bx23 = d.chg23 >= 0 ? zeroX : pad.left + ((d.chg23 - minV) / range) * cW;
+    const bw23 = Math.abs(d.chg23 / range * cW);
+    ctx.fillStyle = '#c8c0b8'; ctx.globalAlpha = 0.5;
+    ctx.fillRect(bx23, y - barH - 2, bw23, barH * 0.75);
+    ctx.globalAlpha = 1;
+
+    // 2024 bar
+    const color = d.chg24 >= 0 ? '#2e7d5a' : '#9b3a3a';
+    const bx24 = d.chg24 >= 0 ? zeroX : pad.left + ((d.chg24 - minV) / range) * cW;
+    const bw24 = Math.max(2, Math.abs(d.chg24 / range * cW));
+    ctx.fillStyle = color;
+    ctx.fillRect(bx24, y + 2, bw24, barH);
+
+    const lx = d.chg24 >= 0 ? bx24 + bw24 + 3 : bx24 - 3;
+    ctx.font = "9px 'DM Mono', monospace";
+    ctx.fillStyle = color;
+    ctx.textAlign = d.chg24 >= 0 ? 'left' : 'right';
+    ctx.fillText((d.chg24 > 0 ? '+' : '') + d.chg24 + '%', lx, y + barH + 1);
+  });
+})();
+
+// ─── 5. EMP/POP RATIO ───────────────────────────────────────────────────────
+(function() {
+  const data = [
+    { county: 'Swain', ratio: 83.0 }, { county: 'Catawba', ratio: 53.6 },
+    { county: 'Buncombe', ratio: 49.6 }, { county: 'Watauga', ratio: 46.4 },
+    { county: 'Avery', ratio: 43.4 }, { county: 'Henderson', ratio: 37.1 },
+    { county: 'Cleveland', ratio: 36.2 }, { county: 'McDowell', ratio: 34.2 },
+    { county: 'Mitchell', ratio: 34.2 }, { county: 'Burke', ratio: 33.4 },
+    { county: 'Gaston', ratio: 33.2 }, { county: 'Jackson', ratio: 32.5 },
+    { county: 'Macon', ratio: 32.4 }, { county: 'Caldwell', ratio: 31.5 },
+    { county: 'Alleghany', ratio: 30.4 }, { county: 'Lincoln', ratio: 29.0 },
+    { county: 'Wilkes', ratio: 28.9 }, { county: 'Transylvania', ratio: 28.6 },
+    { county: 'Haywood', ratio: 28.4 }, { county: 'Ashe', ratio: 27.8 },
+    { county: 'Rutherford', ratio: 27.6 }, { county: 'Polk', ratio: 27.0 },
+    { county: 'Yancey', ratio: 25.9 }, { county: 'Alexander', ratio: 23.3 },
+    { county: 'Madison', ratio: 19.6 }, { county: 'Clay', ratio: 18.4 },
+  ];
+
+  const canvas = document.getElementById('empPopChart');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = { top: 16, right: 80, bottom: 16, left: 110 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+  ctx.clearRect(0, 0, W, H);
+
+  const maxR = 90;
+  const n = data.length;
+  const rowH = cH / n;
+  const barH = Math.min(16, rowH * 0.55);
+
+  data.forEach((d, i) => {
+    const y = pad.top + i * rowH + rowH / 2;
+    const barW = (d.ratio / maxR) * cW;
+    const shade = d.ratio > 50 ? '#c8963c' : d.ratio > 35 ? '#5a3020' : d.ratio > 25 ? '#888075' : '#c0392b';
+
+    ctx.font = "11px 'Instrument Sans', sans-serif";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.county, pad.left - 6, y + 4);
+
+    ctx.fillStyle = shade;
+    ctx.fillRect(pad.left, y - barH / 2, barW, barH);
+
+    ctx.font = "10px 'DM Mono', monospace";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'left';
+    ctx.fillText(d.ratio + ' jobs/100', pad.left + barW + 6, y + 4);
+  });
+
+  // Avg line
+  const avgX = pad.left + (30 / maxR) * cW;
+  ctx.strokeStyle = '#888075'; ctx.lineWidth = 1.5; ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(avgX, pad.top); ctx.lineTo(avgX, pad.top + cH); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.font = "9px 'DM Mono', monospace"; ctx.fillStyle = '#888075';
+  ctx.textAlign = 'center';
+  ctx.fillText('Avg ~30', avgX, pad.top + 10);
+})();
+
+// ─── 6a. NC PROJECTED GROWTH ─────────────────────────────────────────────────
+(function() {
+  const data = [
+    { sector: 'Health Care & Social Assistance', val: 101500, color: '#1b4d6e', confirmed: true },
+    { sector: 'Accommodation & Food Services', val: 50000, color: '#888075', confirmed: false },
+    { sector: 'Prof, Scientific & Technical Svcs', val: 62000, color: '#4a7c6a', confirmed: true },
+    { sector: 'Construction', val: 38000, color: '#b86040', confirmed: false },
+    { sector: 'Transportation & Warehousing', val: 22000, color: '#888075', confirmed: false },
+    { sector: 'Administrative Services', val: 18000, color: '#888075', confirmed: false },
+    { sector: 'Arts, Entertainment & Recreation', val: 16000, color: '#7a6a50', confirmed: true },
+    { sector: 'Manufacturing', val: 16000, color: '#5a3020', confirmed: true },
+    { sector: 'Finance & Insurance', val: 12000, color: '#888075', confirmed: false },
+    { sector: 'Educational Services', val: 10000, color: '#888075', confirmed: false },
+    { sector: 'Retail Trade', val: -8000, color: '#9b3a3a', confirmed: false },
+  ].sort((a,b) => b.val - a.val);
+
+  const canvas = document.getElementById('projChart');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = { top: 16, right: 70, bottom: 36, left: 186 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+  ctx.clearRect(0, 0, W, H);
+
+  const minV = -20000, maxV = 110000;
+  const range = maxV - minV;
+  const zeroX = pad.left + ((-minV) / range) * cW;
+  const n = data.length;
+  const rowH = cH / n;
+  const barH = Math.min(20, rowH * 0.55);
+
+  [0, 25000, 50000, 75000, 100000].forEach(v => {
+    const x = pad.left + ((v - minV) / range) * cW;
+    ctx.strokeStyle = v === 0 ? '#888075' : '#ede9e2';
+    ctx.lineWidth = v === 0 ? 1.5 : 1;
+    ctx.setLineDash(v === 0 ? [] : [2, 3]);
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + cH); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = "9px 'DM Mono', monospace";
+    ctx.fillStyle = '#9b948c';
+    ctx.textAlign = 'center';
+    ctx.fillText(v === 0 ? '0' : '+' + v/1000 + 'K', x, pad.top + cH + 16);
+  });
+
+  data.forEach((d, i) => {
+    const y = pad.top + i * rowH + rowH / 2;
+    const x0 = d.val >= 0 ? zeroX : pad.left + ((d.val - minV) / range) * cW;
+    const bW = Math.max(2, Math.abs(d.val / range * cW));
+
+    ctx.font = "11px 'Instrument Sans', sans-serif";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.sector, pad.left - 8, y + 4);
+
+    ctx.fillStyle = d.color;
+    ctx.globalAlpha = d.confirmed ? 1.0 : 0.55;
+    ctx.fillRect(x0, y - barH / 2, bW, barH);
+    ctx.globalAlpha = 1;
+
+    const lX = d.val >= 0 ? x0 + bW + 4 : x0 - 4;
+    ctx.font = "9.5px 'DM Mono', monospace";
+    ctx.fillStyle = d.confirmed ? '#1a1714' : '#9b948c';
+    ctx.textAlign = d.val >= 0 ? 'left' : 'right';
+    const prefix = d.val >= 0 ? '+' : '';
+    ctx.fillText(prefix + (d.val/1000).toFixed(0) + 'K' + (d.confirmed ? '' : '*'), lX, y + 4);
+  });
+
+  ctx.font = "9px 'Instrument Sans', sans-serif";
+  ctx.fillStyle = '#9b948c';
+  ctx.textAlign = 'left';
+  ctx.fillText('* Estimated — LEAD confirmed figures for highlighted sectors only', pad.left, pad.top + cH + 32);
+})();
+
+// ─── 6b. TWO-SPEED MANUFACTURING ─────────────────────────────────────────────
+(function() {
+  const data = [
+    { sector: 'Food Manufacturing', val: 4500, color: '#2e7d5a' },
+    { sector: 'Machinery Mfg', val: 4100, color: '#2e7d5a' },
+    { sector: 'Chemical Mfg', val: 3600, color: '#1b4d6e' },
+    { sector: 'Transportation Equip Mfg', val: 2600, color: '#2e7d5a' },
+    { sector: 'Other Mfg (net)', val: 3400, color: '#888075' },
+    { sector: 'Textile Mills', val: -4200, color: '#9b3a3a' },
+    { sector: 'Apparel Mfg', val: -2500, color: '#c0392b' },
+    { sector: 'Other legacy declines', val: -1500, color: '#c8c0b8' },
+  ].sort((a,b) => b.val - a.val);
+
+  const canvas = document.getElementById('mfgSplitChart');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = { top: 16, right: 60, bottom: 60, left: 168 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+  ctx.clearRect(0, 0, W, H);
+
+  const minV = -5000, maxV = 5500;
+  const range = maxV - minV;
+  const zeroX = pad.left + ((-minV) / range) * cW;
+  const n = data.length;
+  const rowH = cH / n;
+  const barH = Math.min(22, rowH * 0.6);
+
+  [-4000,-2000,0,2000,4000].forEach(v => {
+    const x = pad.left + ((v - minV) / range) * cW;
+    ctx.strokeStyle = v === 0 ? '#888075' : '#ede9e2';
+    ctx.lineWidth = v === 0 ? 1.5 : 1;
+    ctx.setLineDash(v === 0 ? [] : [2, 3]);
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + cH); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = "9px 'DM Mono', monospace";
+    ctx.fillStyle = '#9b948c';
+    ctx.textAlign = 'center';
+    ctx.fillText((v >= 0 ? '+' : '') + v/1000 + 'K', x, pad.top + cH + 16);
+  });
+
+  data.forEach((d, i) => {
+    const y = pad.top + i * rowH + rowH / 2;
+    const x0 = d.val >= 0 ? zeroX : pad.left + ((d.val - minV) / range) * cW;
+    const bW = Math.max(2, Math.abs(d.val / range * cW));
+
+    ctx.font = "11px 'Instrument Sans', sans-serif";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.sector, pad.left - 8, y + 4);
+
+    ctx.fillStyle = d.color;
+    ctx.fillRect(x0, y - barH / 2, bW, barH);
+
+    const lX = d.val >= 0 ? x0 + bW + 4 : x0 - 4;
+    ctx.font = "9.5px 'DM Mono', monospace";
+    ctx.fillStyle = '#1a1714';
+    ctx.textAlign = d.val >= 0 ? 'left' : 'right';
+    ctx.fillText((d.val >= 0 ? '+' : '') + d.val.toLocaleString(), lX, y + 4);
+  });
+
+  // Net label
+  ctx.font = "11px 'Instrument Sans', sans-serif";
+  ctx.fillStyle = '#5a3020';
+  ctx.textAlign = 'center';
+  ctx.fillText('Net total: +16,000 jobs — but split between growing & declining sub-sectors', pad.left + cW/2, pad.top + cH + 44);
+})();
+
+// Rerender on resize
+window.addEventListener('resize', () => {
+  ['trendChart','compChart','resilChart','countyChart','empPopChart','projChart','mfgSplitChart']
+    .forEach(id => { const c = document.getElementById(id); if(c) { const ev = new Event('resize'); } });
+  location.reload();
+});
+
+
+
+// ── MATRIX + JOBS TABLE (same as before) ────────────────────────────────────
+
+const LW = 36400;
+function fmtK(v) {
+  if (!v || isNaN(v)) return '—';
+  if (v >= 1000) return '$' + Math.round(v/1000) + 'K';
+  return '$' + v;
+}
+function fmtEmp(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
+
+const hcMatrix = [
+  { edu: 'HS or less', n_above: 26, emp_above: 19230, n_below: 80, emp_below: 207800 },
+  { edu: 'Certificate / Associate', n_above: 22, emp_above: 69210, n_below: 16, emp_below: 112150 },
+  { edu: "Bachelor's degree", n_above: 59, emp_above: 150600, n_below: 11, emp_below: 5470 },
+  { edu: 'Graduate degree', n_above: 34, emp_above: 79500, n_below: 3, emp_below: 3470 },
+];
+const mfgMatrix = [
+  { edu: 'HS or less', n_above: 50, emp_above: 63210, n_below: 29, emp_below: 60180 },
+  { edu: 'Certificate / Associate', n_above: 19, emp_above: 7780, n_below: 0, emp_below: 0 },
+  { edu: "Bachelor's degree", n_above: 65, emp_above: 65440, n_below: 2, emp_below: 1520 },
+  { edu: 'Graduate degree', n_above: 4, emp_above: 1100, n_below: 1, emp_below: 40 },
+];
+const eduClass = { 'HS or less': 'edu-hs', 'Certificate / Associate': 'edu-cert', "Bachelor's degree": 'edu-ba', 'Graduate degree': 'edu-grad' };
+
+function buildMatrix(tableId, data, isHC) {
+  const table = document.getElementById(tableId);
+  table.innerHTML = `<thead><tr>
+      <th style="width:160px">${isHC ? 'Healthcare' : 'Adv. Manufacturing'}</th>
+      <th>Entry ≥ LW</th><th>Entry &lt; LW</th>
+      <th style="width:220px">Workers by wage tier</th></tr></thead><tbody>
+  ` + data.map(d => {
+    const maxTotal = Math.max(...data.map(x => x.emp_above + x.emp_below));
+    const abovePct = d.emp_above / maxTotal * 180;
+    const belowPct = d.emp_below / maxTotal * 180;
+    return `<tr>
+      <td><span class="edu-tag ${eduClass[d.edu]}">${d.edu}</span></td>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;"><span style="color:var(--pos);font-weight:500;">${d.n_above} roles</span><br><span style="color:var(--light);font-size:10px;">${fmtEmp(d.emp_above)} workers</span></td>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;">${d.n_below > 0 ? `<span style="color:var(--neg);font-weight:500;">${d.n_below} roles</span><br><span style="color:var(--light);font-size:10px;">${fmtEmp(d.emp_below)} workers</span>` : '<span style="color:var(--light);">—</span>'}</td>
+      <td><div style="display:flex;align-items:center;gap:4px;padding:4px 0;">
+        <div style="height:10px;width:${abovePct}px;background:var(--pos);border-radius:2px;opacity:0.75;"></div>
+        <div style="height:10px;width:${belowPct}px;background:var(--neg);border-radius:2px;opacity:0.5;"></div>
+      </div></td>
+    </tr>`;
+  }).join('') + '</tbody>';
+}
+buildMatrix('hc-matrix-table', hcMatrix, true);
+buildMatrix('mfg-matrix-table', mfgMatrix, false);
+
+// ── JOBS TABLE ──────────────────────────────────────────────────────────────
+const goodJobs = [
+  {sector:'Healthcare',occ:'Licensed Practical and Licensed Vocational Nurses',emp:14000,p10:49030,median:60590,edu:'Certificate / Associate',natl_openings:54.4},
+  {sector:'Adv. Manufacturing',occ:'First-Line Supervisors of Production Workers',emp:6440,p10:49449,median:72240,edu:'HS or less',natl_openings:67.7},
+  {sector:'Healthcare',occ:'Dental Assistants',emp:10480,p10:37180,median:48630,edu:'Certificate / Associate',natl_openings:52.9},
+  {sector:'Adv. Manufacturing',occ:'Chemical Equipment Operators and Tenders',emp:6770,p10:41110,median:50290,edu:'HS or less',natl_openings:14.4},
+  {sector:'Healthcare',occ:'Radiologic Technologists and Technicians',emp:7370,p10:51020,median:66910,edu:'Certificate / Associate',natl_openings:12.9},
+  {sector:'Adv. Manufacturing',occ:'Inspectors, Testers, Sorters, Samplers, Weighers',emp:7700,p10:36854,median:50668,edu:'HS or less',natl_openings:69.9},
+  {sector:'Healthcare',occ:'Dental Hygienists',emp:6520,p10:77830,median:89960,edu:'Certificate / Associate',natl_openings:15.3},
+  {sector:'Adv. Manufacturing',occ:'Machinists',emp:5220,p10:40847,median:53283,edu:'HS or less',natl_openings:29.5},
+  {sector:'Healthcare',occ:'Health Technologists and Technicians, All Other',emp:6380,p10:36470,median:44840,edu:'Certificate / Associate',natl_openings:13.6},
+  {sector:'Adv. Manufacturing',occ:'Welders, Cutters, Solderers, and Brazers',emp:4440,p10:37212,median:51962,edu:'HS or less',natl_openings:45.6},
+  {sector:'Healthcare',occ:'Respiratory Therapists',emp:4050,p10:62020,median:77670,edu:'Certificate / Associate',natl_openings:8.8},
+  {sector:'Adv. Manufacturing',occ:'Industrial Machinery Mechanics',emp:3030,p10:44216,median:61404,edu:'HS or less',natl_openings:45.7},
+  {sector:'Healthcare',occ:'Pharmacy Technicians',emp:4120,p10:39130,median:46890,edu:'HS or less',natl_openings:49.0},
+  {sector:'Adv. Manufacturing',occ:'Maintenance and Repair Workers, General',emp:3450,p10:43040,median:61359,edu:'HS or less',natl_openings:159.8},
+  {sector:'Healthcare',occ:'Surgical Technologists',emp:3460,p10:47850,median:59550,edu:'Certificate / Associate',natl_openings:7.0},
+  {sector:'Adv. Manufacturing',occ:'Packaging and Filling Machine Operators',emp:5400,p10:38220,median:44725,edu:'HS or less',natl_openings:45.3},
+  {sector:'Healthcare',occ:'Physical Therapist Assistants',emp:3030,p10:52760,median:63980,edu:'Certificate / Associate',natl_openings:19.8},
+  {sector:'Adv. Manufacturing',occ:'Mixing and Blending Machine Operators',emp:2950,p10:38835,median:45488,edu:'HS or less',natl_openings:8.8},
+];
+
+(function(){
+  const table = document.getElementById('jobs-table');
+  const MAX = 115000;
+  table.innerHTML = `<thead><tr>
+    <th style="width:48px">Sector</th><th>Occupation</th>
+    <th style="width:80px;text-align:right">NC workers</th>
+    <th style="width:80px;text-align:right">Entry (P10)</th>
+    <th style="width:80px;text-align:right">Median</th>
+    <th style="width:200px">Wage range</th>
+    <th style="width:90px;text-align:center">Natl. openings/yr</th>
+    <th style="width:120px">Credential</th>
+  </tr></thead><tbody>` +
+  goodJobs.map(d => {
+    const isHC = d.sector === 'Healthcare';
+    const color = isHC ? 'var(--hc)' : 'var(--mfg)';
+    const colorBar = isHC ? 'var(--hc-light)' : 'var(--mfg-light)';
+    const p10p = (d.p10/MAX)*100, medp = (d.median/MAX)*100, lwp = (LW/MAX)*100;
+    const short = d.occ.length > 48 ? d.occ.slice(0,46)+'…' : d.occ;
+    return `<tr>
+      <td><span class="sector-pill ${isHC?'sp-hc':'sp-mfg'}">${isHC?'HC':'MFG'}</span></td>
+      <td style="font-size:12px;font-weight:500;" title="${d.occ}">${short}</td>
+      <td style="text-align:right;font-family:'DM Mono',monospace;font-size:11px;">${fmtEmp(d.emp)}</td>
+      <td style="text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--pos);">${fmtK(d.p10)}</td>
+      <td style="text-align:right;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;">${fmtK(d.median)}</td>
+      <td class="wage-range-cell"><div class="wage-track">
+        <div class="wage-bg2"></div>
+        <div class="wage-bar" style="left:${p10p}%;width:${medp-p10p}%;background:${colorBar};border:1px solid ${color};opacity:0.85;"></div>
+        <div class="wage-dot" style="left:${medp}%;background:${color};"></div>
+        <div class="wage-lw" style="left:${lwp}%;"></div>
+      </div></td>
+      <td style="text-align:center;font-family:'DM Mono',monospace;font-size:11px;">${d.natl_openings?d.natl_openings.toFixed(1)+'K':'—'}</td>
+      <td style="font-size:11px;color:var(--muted);">${d.edu}</td>
+    </tr>`;
+  }).join('') + '</tbody>';
+})();
+
+// ── COUNTY CHART (OFFICIAL LAUS RATES) ──────────────────────────────────────
+const countyData = [  {county:"Hyde",r24:5.6,r23:6.2,chg:-0.6,helene:false},
+  {county:"Edgecombe",r24:5.2,r23:5.5,chg:-0.3,helene:false},
+  {county:"Halifax",r24:5.2,r23:5.3,chg:-0.1,helene:false},
+  {county:"Scotland",r24:5.2,r23:5.3,chg:-0.1,helene:false},
+  {county:"Wilson",r24:5.1,r23:4.7,chg:0.4,helene:false},
+  {county:"Robeson",r24:5.0,r23:5.0,chg:0.0,helene:false},
+  {county:"Tyrrell",r24:4.9,r23:5.7,chg:-0.8,helene:false},
+  {county:"Bertie",r24:4.9,r23:4.7,chg:0.2,helene:false},
+  {county:"Bladen",r24:4.9,r23:4.7,chg:0.2,helene:false},
+  {county:"Warren",r24:4.7,r23:4.5,chg:0.2,helene:false},
+  {county:"Nash",r24:4.5,r23:4.5,chg:0.0,helene:false},
+  {county:"Vance",r24:4.5,r23:4.6,chg:-0.1,helene:false},
+  {county:"Washington",r24:4.5,r23:5.0,chg:-0.5,helene:false},
+  {county:"Northampton",r24:4.5,r23:4.7,chg:-0.2,helene:false},
+  {county:"Cumberland",r24:4.5,r23:4.5,chg:0.0,helene:false},
+  {county:"Columbus",r24:4.4,r23:4.1,chg:0.3,helene:false},
+  {county:"Rutherford",r24:4.4,r23:4.1,chg:0.3,helene:true},
+  {county:"Anson",r24:4.4,r23:4.4,chg:0.0,helene:false},
+  {county:"Mitchell",r24:4.4,r23:3.3,chg:1.1,helene:true},
+  {county:"Avery",r24:4.3,r23:3.3,chg:1.0,helene:true},
+  {county:"Hertford",r24:4.3,r23:4.2,chg:0.1,helene:false},
+  {county:"Hoke",r24:4.3,r23:4.3,chg:0.0,helene:false},
+  {county:"Buncombe",r24:4.3,r23:2.9,chg:1.4,helene:true},
+  {county:"Guilford",r24:4.2,r23:3.9,chg:0.3,helene:false},
+  {county:"Dare",r24:4.1,r23:4.2,chg:-0.1,helene:false},
+  {county:"Brunswick",r24:4.1,r23:4.0,chg:0.1,helene:false},
+  {county:"Yancey",r24:4.1,r23:3.3,chg:0.8,helene:true},
+  {county:"Martin",r24:4.1,r23:4.0,chg:0.1,helene:false},
+  {county:"Richmond",r24:4.1,r23:3.9,chg:0.2,helene:false},
+  {county:"McDowell",r24:4.0,r23:3.4,chg:0.6,helene:true},
+  {county:"Pitt",r24:4.0,r23:4.1,chg:-0.1,helene:false},
+  {county:"Sampson",r24:4.0,r23:3.9,chg:0.1,helene:false},
+  {county:"Cleveland",r24:4.0,r23:3.8,chg:0.2,helene:true},
+  {county:"Montgomery",r24:3.9,r23:3.7,chg:0.2,helene:false},
+  {county:"Rockingham",r24:3.9,r23:3.9,chg:0.0,helene:false},
+  {county:"Madison",r24:3.9,r23:3.0,chg:0.9,helene:true},
+  {county:"Lenoir",r24:3.9,r23:3.9,chg:0.0,helene:false},
+  {county:"Alleghany",r24:3.8,r23:4.2,chg:-0.4,helene:true},
+  {county:"Perquimans",r24:3.8,r23:3.6,chg:0.2,helene:false},
+  {county:"Pasquotank",r24:3.8,r23:4.0,chg:-0.2,helene:false},
+  {county:"Pamlico",r24:3.8,r23:3.7,chg:0.1,helene:false},
+  {county:"Harnett",r24:3.8,r23:3.8,chg:0.0,helene:false},
+  {county:"Cherokee",r24:3.8,r23:3.8,chg:0.0,helene:false},
+  {county:"Forsyth",r24:3.8,r23:3.7,chg:0.1,helene:false},
+  {county:"Wilkes",r24:3.8,r23:3.7,chg:0.1,helene:true},
+  {county:"Wayne",r24:3.7,r23:3.7,chg:0.0,helene:false},
+  {county:"Onslow",r24:3.7,r23:3.7,chg:0.0,helene:false},
+  {county:"Beaufort",r24:3.7,r23:4.0,chg:-0.3,helene:false},
+  {county:"Alexander",r24:3.7,r23:3.5,chg:0.2,helene:true},
+  {county:"Davidson",r24:3.7,r23:3.5,chg:0.2,helene:false},
+  {county:"Gaston",r24:3.7,r23:3.5,chg:0.2,helene:true},
+  {county:"Mecklenburg",r24:3.7,r23:3.5,chg:0.2,helene:false},
+  {county:"Burke",r24:3.6,r23:3.3,chg:0.3,helene:true},
+  {county:"Alamance",r24:3.6,r23:3.5,chg:0.1,helene:false},
+  {county:"Jackson",r24:3.6,r23:3.6,chg:0.0,helene:true},
+  {county:"Haywood",r24:3.6,r23:3.2,chg:0.4,helene:true},
+  {county:"Jones",r24:3.6,r23:3.6,chg:0.0,helene:false},
+  {county:"Caswell",r24:3.6,r23:3.5,chg:0.1,helene:false},
+  {county:"Catawba",r24:3.6,r23:3.4,chg:0.2,helene:true},
+  {county:"Craven",r24:3.6,r23:3.6,chg:0.0,helene:false},
+  {county:"Lee",r24:3.5,r23:3.6,chg:-0.1,helene:false},
+  {county:"Rowan",r24:3.5,r23:3.4,chg:0.1,helene:false},
+  {county:"Graham",r24:3.5,r23:3.5,chg:0.0,helene:false},
+  {county:"Granville",r24:3.5,r23:3.4,chg:0.1,helene:false},
+  {county:"Caldwell",r24:3.5,r23:3.3,chg:0.2,helene:true},
+  {county:"Randolph",r24:3.5,r23:3.5,chg:0.0,helene:false},
+  {county:"Swain",r24:3.5,r23:3.3,chg:0.2,helene:true},
+  {county:"Transylvania",r24:3.5,r23:3.2,chg:0.3,helene:true},
+  {county:"Watauga",r24:3.5,r23:3.3,chg:0.2,helene:true},
+  {county:"Carteret",r24:3.4,r23:3.3,chg:0.1,helene:false},
+  {county:"Chowan",r24:3.4,r23:3.4,chg:0.0,helene:false},
+  {county:"Cabarrus",r24:3.4,r23:3.3,chg:0.1,helene:false},
+  {county:"Stokes",r24:3.4,r23:3.2,chg:0.2,helene:false},
+  {county:"Gates",r24:3.4,r23:3.6,chg:-0.2,helene:false},
+  {county:"Moore",r24:3.4,r23:3.5,chg:-0.1,helene:false},
+  {county:"Person",r24:3.4,r23:3.3,chg:0.1,helene:false},
+  {county:"Davie",r24:3.3,r23:3.2,chg:0.1,helene:false},
+  {county:"Surry",r24:3.3,r23:3.2,chg:0.1,helene:false},
+  {county:"Pender",r24:3.3,r23:3.3,chg:0.0,helene:false},
+  {county:"Polk",r24:3.3,r23:3.1,chg:0.2,helene:true},
+  {county:"Iredell",r24:3.3,r23:3.2,chg:0.1,helene:false},
+  {county:"Clay",r24:3.3,r23:3.4,chg:-0.1,helene:true},
+  {county:"Duplin",r24:3.3,r23:3.3,chg:0.0,helene:false},
+  {county:"Franklin",r24:3.3,r23:3.3,chg:0.0,helene:false},
+  {county:"Macon",r24:3.3,r23:3.3,chg:0.0,helene:true},
+  {county:"New Hanover",r24:3.3,r23:3.4,chg:-0.1,helene:false},
+  {county:"Lincoln",r24:3.3,r23:3.1,chg:0.2,helene:true},
+  {county:"Union",r24:3.2,r23:3.1,chg:0.1,helene:false},
+  {county:"Durham",r24:3.2,r23:3.1,chg:0.1,helene:false},
+  {county:"Henderson",r24:3.2,r23:2.8,chg:0.4,helene:true},
+  {county:"Orange",r24:3.2,r23:3.1,chg:0.1,helene:false},
+  {county:"Ashe",r24:3.1,r23:3.1,chg:0.0,helene:true},
+  {county:"Greene",r24:3.1,r23:3.0,chg:0.1,helene:false},
+  {county:"Stanly",r24:3.1,r23:3.1,chg:0.0,helene:false},
+  {county:"Chatham",r24:3.1,r23:3.1,chg:0.0,helene:false},
+  {county:"Johnston",r24:3.1,r23:3.0,chg:0.1,helene:false},
+  {county:"Wake",r24:3.1,r23:3.0,chg:0.1,helene:false},
+  {county:"Yadkin",r24:3.1,r23:3.2,chg:-0.1,helene:false},
+  {county:"Currituck",r24:2.8,r23:2.9,chg:-0.1,helene:false},
+  {county:"Camden",r24:2.8,r23:2.9,chg:-0.1,helene:false}];
+
+(function(){
+  const canvas = document.getElementById('countyCanvas2');
+  const W = canvas.parentElement.offsetWidth;
+  canvas.width = W;
+  const ctx = canvas.getContext('2d');
+  const pad = {top:20, right:80, bottom:30, left:116};
+  const cW = W - pad.left - pad.right;
+  const H = canvas.height;
+  const cH = H - pad.top - pad.bottom;
+  ctx.clearRect(0,0,W,H);
+
+  const n = countyData.length;
+  const rowH = cH / n;
+  const barH = Math.min(13, rowH * 0.58);
+  const maxV = 5.9;
+  const NC_AVG = 3.7;
+
+  // Grid lines
+  [2,3,4,5].forEach(v => {
+    const x = pad.left + (v/maxV)*cW;
+    ctx.strokeStyle = '#ede9e2'; ctx.lineWidth = 1; ctx.setLineDash([2,3]);
+    ctx.beginPath(); ctx.moveTo(x,pad.top); ctx.lineTo(x,pad.top+cH); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = "9px 'DM Mono', monospace"; ctx.fillStyle = '#9b948c'; ctx.textAlign = 'center';
+    ctx.fillText(v+'%', x, pad.top+cH+16);
+  });
+
+  // NC avg line
+  const avgX = pad.left + (NC_AVG/maxV)*cW;
+  ctx.strokeStyle = '#888075'; ctx.lineWidth = 1.5; ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(avgX,pad.top); ctx.lineTo(avgX,pad.top+cH); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.font = "9px 'DM Mono', monospace"; ctx.fillStyle = '#888075'; ctx.textAlign = 'center';
+  ctx.fillText('NC avg 3.7%', avgX, pad.top+10);
+
+  countyData.forEach((d, i) => {
+    const y = pad.top + i*rowH + rowH/2;
+    const barW = Math.max(2, (d.r24/maxV)*cW);
+    const dotX = pad.left + (d.r23/maxV)*cW;
+    const color = d.helene ? '#c0392b' : '#888075';
+    const alpha = d.helene ? 0.82 : 0.6;
+
+    ctx.font = "10px 'Instrument Sans', sans-serif";
+    ctx.fillStyle = '#1a1714'; ctx.textAlign = 'right';
+    ctx.fillText(d.county, pad.left-6, y+4);
+
+    ctx.fillStyle = color; ctx.globalAlpha = alpha;
+    ctx.fillRect(pad.left, y-barH/2, barW, barH);
+    ctx.globalAlpha = 1;
+
+    // 2023 dot
+    ctx.beginPath(); ctx.arc(dotX, y, 2.5, 0, Math.PI*2);
+    ctx.fillStyle = '#1a1714'; ctx.globalAlpha = 0.35; ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Rate label
+    ctx.font = "9px 'DM Mono', monospace"; ctx.fillStyle = color; ctx.textAlign = 'left';
+    const chgStr = d.chg > 0 ? ' ▲+'+d.chg.toFixed(1) : d.chg < 0 ? ' ▼'+d.chg.toFixed(1) : '';
+    ctx.fillText(d.r24.toFixed(1)+'%'+chgStr, pad.left+barW+5, y+3);
+  });
+})();
+
+
+
+// ── 1. GROWTH TREND ──────────────────────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('trendCanvas');
+  const W = canvas.parentElement.offsetWidth; canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = {top:36, right:200, bottom:40, left:64};
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+
+  // Historical data
+  const hist = [
+    {yr:'FY18', val:9963}, {yr:'FY19', val:12212}, {yr:'FY20', val:15657},
+    {yr:'FY21', val:16894}, {yr:'FY22', val:13377}, {yr:'FY23', val:10440},
+    {yr:'FY24', val:15090}, {yr:'FY25', val:16446}
+  ];
+  // Projections
+  const projFund = [{yr:'FY25',val:16446},{yr:'FY26',val:19000},{yr:'FY27',val:22000},{yr:'FY28',val:24380},{yr:'FY34',val:52000}];
+  const projNo   = [{yr:'FY25',val:16446},{yr:'FY26',val:10000},{yr:'FY27',val:6500},{yr:'FY28',val:4050},{yr:'FY34',val:4000}];
+
+  const allVals = [...hist.map(d=>d.val), ...projFund.map(d=>d.val)];
+  const maxV = 55000;
+  const years = ['FY18','FY19','FY20','FY21','FY22','FY23','FY24','FY25','FY26','FY27','FY28','FY34'];
+
+  function xPos(yr) {
+    const i = years.indexOf(yr);
+    return pad.left + (i / (years.length-1)) * cW;
+  }
+  function yPos(v) { return pad.top + (1 - v/maxV)*cH; }
+
+  // Grid
+  [0, 10000,20000,30000,40000,50000].forEach(v => {
+    const y = yPos(v);
+    ctx.strokeStyle = '#ede9e2'; ctx.lineWidth = 1; ctx.setLineDash([2,3]);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left+cW, y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle='#9b948c'; ctx.textAlign='right';
+    ctx.fillText(v===0?'0':v/1000+'K', pad.left-6, y+3);
+  });
+
+  // Projection shading - funded
+  ctx.beginPath();
+  ctx.moveTo(xPos('FY25'), yPos(16446));
+  projFund.forEach(d => ctx.lineTo(xPos(d.yr), yPos(d.val)));
+  ctx.lineTo(xPos('FY34'), yPos(maxV*0));
+  ctx.lineTo(xPos('FY25'), yPos(maxV*0));
+  ctx.closePath(); ctx.fillStyle='rgba(46,125,90,0.07)'; ctx.fill();
+
+  // Projection shading - no fund
+  ctx.beginPath();
+  ctx.moveTo(xPos('FY25'), yPos(16446));
+  projNo.forEach(d => ctx.lineTo(xPos(d.yr), yPos(d.val)));
+  ctx.lineTo(xPos('FY34'), yPos(0));
+  ctx.lineTo(xPos('FY25'), yPos(0));
+  ctx.closePath(); ctx.fillStyle='rgba(192,57,43,0.06)'; ctx.fill();
+
+  // Projection lines
+  ctx.setLineDash([5,4]);
+  ctx.strokeStyle='#2e7d5a'; ctx.lineWidth=1.5;
+  ctx.beginPath();
+  projFund.forEach((d,i) => i===0 ? ctx.moveTo(xPos(d.yr),yPos(d.val)) : ctx.lineTo(xPos(d.yr),yPos(d.val)));
+  ctx.stroke();
+
+  ctx.strokeStyle='#c0392b'; ctx.lineWidth=1.5;
+  ctx.beginPath();
+  projNo.forEach((d,i) => i===0 ? ctx.moveTo(xPos(d.yr),yPos(d.val)) : ctx.lineTo(xPos(d.yr),yPos(d.val)));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Historical area
+  ctx.beginPath();
+  ctx.moveTo(xPos('FY18'), yPos(0));
+  hist.forEach(d => ctx.lineTo(xPos(d.yr), yPos(d.val)));
+  ctx.lineTo(xPos('FY25'), yPos(0));
+  ctx.closePath(); ctx.fillStyle='rgba(26,23,20,0.07)'; ctx.fill();
+
+  // Historical line
+  ctx.beginPath();
+  hist.forEach((d,i) => i===0 ? ctx.moveTo(xPos(d.yr),yPos(d.val)) : ctx.lineTo(xPos(d.yr),yPos(d.val)));
+  ctx.strokeStyle='#1a1714'; ctx.lineWidth=2; ctx.stroke();
+
+  // Dots & labels
+  hist.forEach(d => {
+    const x=xPos(d.yr), y=yPos(d.val);
+    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle='#1a1714'; ctx.fill();
+    ctx.strokeStyle='#faf8f4'; ctx.lineWidth=1.5; ctx.stroke();
+  });
+
+  // X labels
+  years.forEach(yr => {
+    const x = xPos(yr);
+    ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle='#9b948c'; ctx.textAlign='center';
+    ctx.fillText(yr, x, pad.top+cH+18);
+  });
+
+  // Legend
+  const lx = pad.left + cW + 12;
+  ctx.font="10px 'Instrument Sans',sans-serif"; ctx.textAlign='left';
+  ctx.fillStyle='#1a1714'; ctx.fillRect(lx, pad.top+20, 16, 3);
+  ctx.fillStyle='#6b6560'; ctx.fillText('Historical', lx+20, pad.top+24);
+
+  ctx.strokeStyle='#2e7d5a'; ctx.lineWidth=1.5; ctx.setLineDash([5,4]);
+  ctx.beginPath(); ctx.moveTo(lx, pad.top+48); ctx.lineTo(lx+16, pad.top+48); ctx.stroke();
+  ctx.setLineDash([]); ctx.fillStyle='#2e7d5a'; ctx.fillText('+$3.1M/yr', lx+20, pad.top+52);
+
+  ctx.strokeStyle='#c0392b'; ctx.lineWidth=1.5; ctx.setLineDash([5,4]);
+  ctx.beginPath(); ctx.moveTo(lx, pad.top+68); ctx.lineTo(lx+16, pad.top+68); ctx.stroke();
+  ctx.setLineDash([]); ctx.fillStyle='#c0392b'; ctx.fillText('No funding', lx+20, pad.top+72);
+
+  // End labels
+  ctx.font="bold 10px 'DM Mono',monospace";
+  ctx.fillStyle='#2e7d5a'; ctx.textAlign='left';
+  ctx.fillText('52K', xPos('FY34')+6, yPos(52000)+3);
+  ctx.fillStyle='#c0392b';
+  ctx.fillText('4K', xPos('FY34')+6, yPos(4000)+3);
+
+  // Funding cliff marker
+  const cliffX = xPos('FY26');
+  ctx.strokeStyle='rgba(192,57,43,0.5)'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(cliffX, pad.top); ctx.lineTo(cliffX, pad.top+cH); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle='#c0392b'; ctx.textAlign='center';
+  ctx.fillText('Grant expires', cliffX, pad.top+12);
+})();
+
+// ── 2. SECTOR MIX ────────────────────────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('sectorCanvas');
+  const W = canvas.parentElement.offsetWidth; canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = {top:20, right:100, bottom:40, left:200};
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+
+  const sectors = [
+    {name:'Installation, Maintenance & Repair', v22:2240, v25:1714, c22:'#7a5a20', c25:'#c8963c'},
+    {name:'Construction & Extraction',          v22:3005, v25:1532, c22:'#2e5c3a', c25:'#4a9c6a'},
+    {name:'Healthcare (Support + Pract.)',       v22:3112, v25:479,  c22:'#1b4d6e', c25:'#4a90b8'},
+    {name:'Computer & Mathematical',             v22:504,  v25:284,  c22:'#5a4070', c25:'#9a70c0'},
+    {name:'Production (Manufacturing)',          v22:2233, v25:249,  c22:'#5a3020', c25:'#b86040'},
+    {name:'Public Safety',                       v22:1382, v25:180,  c22:'#555050', c25:'#888080'},
+    {name:'Educational Instruction',             v22:0,    v25:280,  c22:'#888888', c25:'#60a860'},
+    {name:'Architecture & Engineering',          v22:0,    v25:115,  c22:'#888888', c25:'#6080b8'},
+  ];
+
+  const maxV = Math.max(...sectors.flatMap(s=>[s.v22, s.v25])) * 1.1;
+  const n = sectors.length;
+  const rowH = cH / n;
+  const barH = Math.min(16, rowH * 0.42);
+  const gap = 4;
+
+  [0,500,1000,1500,2000,2500,3000].forEach(v => {
+    const x = pad.left + (v/maxV)*cW;
+    ctx.strokeStyle='#ede9e2'; ctx.lineWidth=1; ctx.setLineDash([2,3]);
+    ctx.beginPath(); ctx.moveTo(x,pad.top); ctx.lineTo(x,pad.top+cH); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle='#9b948c'; ctx.textAlign='center';
+    ctx.fillText(v===0?'0':v.toLocaleString(), x, pad.top+cH+16);
+  });
+
+  sectors.forEach((s, i) => {
+    const y = pad.top + i*rowH + rowH/2;
+
+    ctx.font="11px 'Instrument Sans',sans-serif"; ctx.fillStyle='#1a1714'; ctx.textAlign='right';
+    ctx.fillText(s.name, pad.left-8, y+4);
+
+    // FY22 bar (upper)
+    const w22 = (s.v22/maxV)*cW;
+    if(w22>0){
+      ctx.fillStyle=s.c22; ctx.globalAlpha=0.6;
+      ctx.fillRect(pad.left, y-barH-gap/2, w22, barH);
+      ctx.globalAlpha=1;
+      ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle=s.c22; ctx.textAlign='left';
+      ctx.fillText(s.v22.toLocaleString(), pad.left+w22+4, y-barH/2-gap/2+3);
+    } else {
+      ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle='#c8c0b8'; ctx.textAlign='left';
+      ctx.fillText('n/a FY22', pad.left+4, y-barH/2-gap/2+3);
+    }
+
+    // FY25 bar (lower)
+    const w25 = (s.v25/maxV)*cW;
+    ctx.fillStyle=s.c25; ctx.globalAlpha=0.9;
+    ctx.fillRect(pad.left, y+gap/2, w25, barH);
+    ctx.globalAlpha=1;
+    ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle=s.c25; ctx.textAlign='left';
+    const pct = s.v22>0 ? ((s.v25-s.v22)/s.v22*100).toFixed(0) : '—';
+    const pctStr = s.v22>0 ? (s.v25>=s.v22 ? ` ▲+${pct}%` : ` ▼${pct}%`) : ' new';
+    ctx.fillText(s.v25.toLocaleString()+pctStr, pad.left+w25+4, y+barH/2+gap/2+3);
+  });
+
+  // Legend
+  const lx = pad.left+cW+8;
+  ctx.fillStyle='#888075'; ctx.globalAlpha=0.6; ctx.fillRect(lx, pad.top+20, 14, 8); ctx.globalAlpha=1;
+  ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle='#6b6560'; ctx.textAlign='left';
+  ctx.fillText('FY22 served', lx+18, pad.top+28);
+  ctx.fillStyle='#444'; ctx.globalAlpha=0.9; ctx.fillRect(lx, pad.top+40, 14, 8); ctx.globalAlpha=1;
+  ctx.fillText('FY25 new', lx+18, pad.top+48);
+})();
+
+// ── 3. SUPPLY-DEMAND GAP ─────────────────────────────────────────────────────
+(function(){
+  const canvas = document.getElementById('gapCanvas');
+  const W = canvas.parentElement.offsetWidth; canvas.width = W;
+  const H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  const pad = {top:24, right:60, bottom:40, left:64};
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+
+  const sectors = [
+    {name:'Healthcare\n(Support + Practitioners)', demand:88935, supply:479, color:'#1b4d6e', colorL:'#c8dfe9'},
+    {name:'Production\n(Manufacturing)', demand:19883, supply:249, color:'#5a3020', colorL:'#e8c8b8'},
+    {name:'Construction\n& Extraction', demand:18000, supply:1532, color:'#2e5c3a', colorL:'#c8e6d8'},
+    {name:'Install, Maint.\n& Repair', demand:9000, supply:1714, color:'#7a5a20', colorL:'#f0e0b0'},
+  ];
+
+  const maxV = 95000;
+  const n = sectors.length;
+  const colW = cW / n;
+  const maxBarH = cH - 40;
+
+  [0,20000,40000,60000,80000].forEach(v => {
+    const y = pad.top + maxBarH - (v/maxV)*maxBarH;
+    ctx.strokeStyle='#ede9e2'; ctx.lineWidth=1; ctx.setLineDash([2,3]);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left+cW, y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle='#9b948c'; ctx.textAlign='right';
+    ctx.fillText(v===0?'0':v/1000+'K', pad.left-6, y+3);
+  });
+
+  sectors.forEach((s, i) => {
+    const x0 = pad.left + i*colW;
+    const midX = x0 + colW/2;
+    const dH = (s.demand/maxV)*maxBarH;
+    const sH = (s.supply/maxV)*maxBarH;
+    const baseY = pad.top + maxBarH;
+
+    // Demand bar (background)
+    ctx.fillStyle=s.colorL;
+    ctx.fillRect(x0+colW*0.15, baseY-dH, colW*0.7, dH);
+
+    // Supply bar (foreground)
+    ctx.fillStyle=s.color;
+    ctx.fillRect(x0+colW*0.25, baseY-sH, colW*0.5, sH);
+
+    // Gap annotation
+    const gapPct = ((s.demand-s.supply)/s.demand*100).toFixed(1);
+    ctx.font="bold 11px 'DM Serif Display',serif"; ctx.fillStyle=s.color; ctx.textAlign='center';
+    ctx.fillText(gapPct+'% gap', midX, pad.top+maxBarH+18);
+
+    // Demand label (top of bar)
+    if(dH > 20) {
+      ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle=s.color; ctx.textAlign='center';
+      ctx.fillText(s.demand>=1000?(s.demand/1000).toFixed(0)+'K est. demand':s.demand, midX, baseY-dH-6);
+    }
+
+    // Supply label (inside or above supply bar)
+    const sLabelY = sH > 16 ? baseY-sH/2+3 : baseY-sH-6;
+    ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle=sH>16?'#faf8f4':'#1a1714'; ctx.textAlign='center';
+    ctx.fillText(s.supply+' apprentices', midX, sLabelY);
+
+    // Sector name
+    const lines = s.name.split('\n');
+    ctx.font="11px 'Instrument Sans',sans-serif"; ctx.fillStyle='#1a1714'; ctx.textAlign='center';
+    lines.forEach((l, li) => ctx.fillText(l, midX, pad.top - 12 + li*14 + (1-lines.length)*7));
+  });
+
+  // Legend
+  ctx.fillStyle='#e8e3db'; ctx.fillRect(pad.left, pad.top+maxBarH+32, 16, 8);
+  ctx.font="9px 'DM Mono',monospace"; ctx.fillStyle='#6b6560'; ctx.textAlign='left';
+  ctx.fillText('Estimated annual demand (NC)', pad.left+20, pad.top+maxBarH+40);
+  ctx.fillStyle='#888075'; ctx.fillRect(pad.left+200, pad.top+maxBarH+32, 16, 8);
+  ctx.fillText('ApprenticeshipNC new enrollments FY25', pad.left+220, pad.top+maxBarH+40);
+})();
+
+
+// ── MFG-ONLY SECTOR GRID (Section 4) ─────────────────────────────────────────
+(function() {
+  const mfgData = [
+    {sector:'Pharmaceutical & Medicine',emp:25540,p10:44110,median:77730,p75:120560},
+    {sector:'Computer & Electronics',emp:28230,p10:34870,median:80100,p75:129880},
+    {sector:'Aerospace & Parts',emp:6120,p10:48310,median:76980,p75:93980},
+    {sector:'Chemical',emp:47050,p10:38590,median:63570,p75:97980},
+    {sector:'Transportation Equipment',emp:35490,p10:36290,median:52930,p75:66880},
+    {sector:'Machinery',emp:37250,p10:36200,median:50600,p75:73300},
+    {sector:'Electrical Equipment',emp:21310,p10:35670,median:50220,p75:72070},
+    {sector:'Instruments & Controls',emp:7980,p10:29730,median:61380,p75:101350},
+  ];
+  function fmtK(v) { return v ? '$'+Math.round(v/1000)+'K' : '—'; }
+  function fmtEmp(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
+  const grid = document.getElementById('mfg-only-sector-grid');
+  if (!grid) return;
+  grid.innerHTML = mfgData.map(d => `
+    <div class="sector-card mfg">
+      <div class="sector-name">${d.sector}</div>
+      <div class="sector-emp">${fmtEmp(d.emp)}</div>
+      <div class="sector-emp-label">Workers</div>
+      <div class="sector-wages">
+        <div class="sector-wage-item"><div class="sector-wage-val">${fmtK(d.p10)}</div><div class="sector-wage-label">Entry (P10)</div></div>
+        <div class="sector-wage-item"><div class="sector-wage-val">${fmtK(d.median)}</div><div class="sector-wage-label">Median</div></div>
+        <div class="sector-wage-item"><div class="sector-wage-val">${fmtK(d.p75)}</div><div class="sector-wage-label">75th Pct</div></div>
+      </div>
+    </div>`).join('');
+})();
+
+// ── ACTIVE NAV HIGHLIGHT ──────────────────────────────────────────────────────
+(function() {
+  const sections = ['cover','s1','s2','s3','s4','s5','s6','s7'];
+  const links = document.querySelectorAll('.nav-link[href^="#"]');
+  function update() {
+    let active = 'cover';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= 120) active = id;
+    });
+    links.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#'+active);
+    });
+  }
+  document.querySelector('main').addEventListener('scroll', update);
+  window.addEventListener('scroll', update);
+  update();
+})();
+</script>
+</body>
+</html>
